@@ -37,27 +37,27 @@ if __name__ == "__main__":
             if not third in items_index:
                 third = first
         items_index.remove(third)
-        forth = random.randint(0, 65)
-        while forth == first or forth == second or forth == third:
-            forth = random.randint(0, 65)
-            if not forth in items_index:
-                forth = first
-        items_index.remove(forth)
+        fourth = random.randint(0, 65)
+        while fourth == first or fourth == second or fourth == third:
+            fourth = random.randint(0, 65)
+            if not fourth in items_index:
+                fourth = first
+        items_index.remove(fourth)
         dispute = Dispute(
           dispute_id,
           items_check[first][0],
           items_check[second][0],
           items_check[third][0],
-          items_check[forth][0]
+          items_check[fourth][0]
         )
         items_check[first][0].set_dispute(dispute_id)
         items_check[second][0].set_dispute(dispute_id)
         items_check[third][0].set_dispute(dispute_id)
-        items_check[forth][0].set_dispute(dispute_id)
+        items_check[fourth][0].set_dispute(dispute_id)
         del items_check[first][0]
         del items_check[second][0]
         del items_check[third][0]
-        del items_check[forth][0]
+        del items_check[fourth][0]
         disputes.append(dispute)
 
 
@@ -69,7 +69,7 @@ if __name__ == "__main__":
       'first' : [],
       'second' : [],
       'third' : [],
-      'forth' : []
+      'fourth' : []
     }
     forms = []
     for form_id in range(20):
@@ -85,7 +85,7 @@ if __name__ == "__main__":
             result['first'].append(dispute.first)
             result['second'].append(dispute.second)
             result['third'].append(dispute.third)
-            result['forth'].append(dispute.forth)
+            result['fourth'].append(dispute.fourth)
             form.append_dispute(dispute)
             disputes_check.remove(dispute)
         forms.append(form)
@@ -97,7 +97,7 @@ if __name__ == "__main__":
       'first',
       'second',
       'third',
-      'forth'
+      'fourth'
     ])
 
 
