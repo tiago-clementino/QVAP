@@ -12,11 +12,11 @@ if __name__ == "__main__":
         item_copies = [
           item = Item(
             item_csv.id,
+            copy,
             item_csv.shape,
             item_csv.material,
             item_csv.surface,
-            item_csv.constitution,
-            copy
+            item_csv.constitution
           ) for copy in range(25)
         ]
         items[item_csv.id] = item_copies
@@ -75,13 +75,11 @@ if __name__ == "__main__":
     for form_id in range(20):
         form = Form(form_id)
         result['form'].append(form_id)
-        current_dispute = None
+
         for dispute_position in range(20):
             dispute = disputes_check[random.randint(0, Len(disputes_check))]
-            if current_dispute is not None:
-                while not form.audict_dispute(current_dispute,dispute_position):#check if it are able to add this dispute in this position based on some criteria
-                    dispute = disputes_check[random.randint(0, Len(disputes_check))]
-            current_dispute = dispute
+            while not form.audict_dispute(dispute,dispute_position):#check if it are able to add this dispute in this position based on some criteria
+                dispute = disputes_check[random.randint(0, Len(disputes_check))]
             result['dispute'].append(dispute.id)
             result['form_position'].append(dispute.id)
             result['first'].append(dispute.first)
