@@ -1,0 +1,65 @@
+id,shape,material,surface,color,constitution
+0,Geométrica,Metal,Brilhosa,Intensa,Complexidade
+1,Geométrica,Metal,Brilhosa,Intensa,Ordem
+2,Geométrica,Metal,Brilhosa,Neutra,Complexidade
+3,Geométrica,Metal,Brilhosa,Neutra,Ordem
+4,Geométrica,Metal,Fosca,Intensa,Complexidade
+5,Geométrica,Metal,Fosca,Intensa,Ordem
+6,Geométrica,Metal,Fosca,Neutra,Complexidade
+7,Geométrica,Metal,Fosca,Neutra,Ordem
+8,Geométrica,Papel Cartão,Brilhosa,Intensa,Complexidade
+9,Geométrica,Papel Cartão,Brilhosa,Intensa,Ordem
+10,Geométrica,Papel Cartão,Brilhosa,Neutra,Complexidade
+11,Geométrica,Papel Cartão,Brilhosa,Neutra,Ordem
+12,Geométrica,Papel Cartão,Fosca,Intensa,Complexidade
+13,Geométrica,Papel Cartão,Fosca,Intensa,Ordem
+14,Geométrica,Papel Cartão,Fosca,Neutra,Complexidade
+15,Geométrica,Papel Cartão,Fosca,Neutra,Ordem
+16,Geométrica,Polímero,Brilhosa,Intensa,Complexidade
+17,Geométrica,Polímero,Brilhosa,Intensa,Ordem
+18,Geométrica,Polímero,Brilhosa,Neutra,Complexidade
+19,Geométrica,Polímero,Brilhosa,Neutra,Ordem
+20,Geométrica,Polímero,Fosca,Intensa,Complexidade
+21,Geométrica,Polímero,Fosca,Intensa,Ordem
+22,Geométrica,Polímero,Fosca,Neutra,Complexidade
+23,Geométrica,Polímero,Fosca,Neutra,Ordem
+24,Geométrica,Vidro,Brilhosa,Intensa,Complexidade
+25,Geométrica,Vidro,Brilhosa,Intensa,Ordem
+26,Geométrica,Vidro,Brilhosa,Neutra,Complexidade
+27,Geométrica,Vidro,Brilhosa,Neutra,Ordem
+28,Geométrica,Vidro,Fosca,Intensa,Complexidade
+29,Geométrica,Vidro,Fosca,Intensa,Ordem
+30,Geométrica,Vidro,Fosca,Neutra,Complexidade
+31,Geométrica,Vidro,Fosca,Neutra,Ordem
+32,Orgânica,Metal,Brilhosa,Intensa,Complexidade
+33,Orgânica,Metal,Brilhosa,Intensa,Ordem
+34,Orgânica,Metal,Brilhosa,Neutra,Complexidade
+35,Orgânica,Metal,Brilhosa,Neutra,Ordem
+36,Orgânica,Metal,Fosca,Intensa,Complexidade
+37,Orgânica,Metal,Fosca,Intensa,Ordem
+38,Orgânica,Metal,Fosca,Neutra,Complexidade
+39,Orgânica,Metal,Fosca,Neutra,Ordem
+40,Orgânica,Papel Cartão,Brilhosa,Intensa,Complexidade
+41,Orgânica,Papel Cartão,Brilhosa,Intensa,Ordem
+42,Orgânica,Papel Cartão,Brilhosa,Neutra,Complexidade
+43,Orgânica,Papel Cartão,Brilhosa,Neutra,Ordem
+44,Orgânica,Papel Cartão,Fosca,Intensa,Complexidade
+45,Orgânica,Papel Cartão,Fosca,Intensa,Ordem
+46,Orgânica,Papel Cartão,Fosca,Neutra,Complexidade
+47,Orgânica,Papel Cartão,Fosca,Neutra,Ordem
+48,Orgânica,Polímero,Brilhosa,Intensa,Complexidade
+49,Orgânica,Polímero,Brilhosa,Intensa,Ordem
+50,Orgânica,Polímero,Brilhosa,Neutra,Complexidade
+51,Orgânica,Polímero,Brilhosa,Neutra,Ordem
+52,Orgânica,Polímero,Fosca,Intensa,Complexidade
+53,Orgânica,Polímero,Fosca,Intensa,Ordem
+54,Orgânica,Polímero,Fosca,Neutra,Complexidade
+55,Orgânica,Polímero,Fosca,Neutra,Ordem
+56,Orgânica,Vidro,Brilhosa,Intensa,Complexidade
+57,Orgânica,Vidro,Brilhosa,Intensa,Ordem
+58,Orgânica,Vidro,Brilhosa,Neutra,Complexidade
+59,Orgânica,Vidro,Brilhosa,Neutra,Ordem
+60,Orgânica,Vidro,Fosca,Intensa,Complexidade
+61,Orgânica,Vidro,Fosca,Intensa,Ordem
+62,Orgânica,Vidro,Fosca,Neutra,Complexidade
+63,Orgânica,Vidro,Fosca,Neutra,Ordem
