@@ -18,13 +18,14 @@ if __name__ == "__main__":
     items_check = []
     items_index = []
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, "input", "items.csv")
+    filename = os.path.join(dirname, "input", "items+URL.csv")
     items_csv = pd.read_csv(filename)
     items_csv.info()
     for data in items_csv.itertuples():
         item_copies = [
           Item(
             data.id,
+            data.URL,
             copy,
             data.shape,
             data.material,
@@ -96,6 +97,15 @@ if __name__ == "__main__":
     forms = []
     for form_id in range(20):
         form = Form(form_id)
+        result_aux = {
+          'question' : [],
+          'id' : [],
+          'order' : [],
+          'url_first' : [],
+          'url_second' : [],
+          'url_third' : [],
+          'url_fourth' : []
+        }
         for dispute_position in range(20):
             dispute = disputes_check[random.randint(0, len(disputes_check)-1)]
             check = 0
@@ -111,8 +121,28 @@ if __name__ == "__main__":
             result['second'].append(dispute.second)
             result['third'].append(dispute.third)
             result['fourth'].append(dispute.fourth)
+            
+            result_aux['question'].append("Qual das embalagens abaixo lhe parece mais ecologicamente sustentável?")
+            result_aux['id'].append(dispute.id)
+            result_aux['order'].append("%i,%i" % (form_id,dispute_position))
+            result_aux['url_first'].append(dispute.first.GDrive_URL)
+            result_aux['url_second'].append(dispute.second.GDrive_URL)
+            result_aux['url_third'].append(dispute.third.GDrive_URL)
+            result_aux['url_fourth'].append(dispute.fourth.GDrive_URL)
             form.append_dispute(dispute)
             disputes_check.remove(dispute)
+        df = pd.DataFrame(result_aux, columns= [
+          'question',
+          'id',#dispute
+          'order',
+          'url_first',
+          'url_second',
+          'url_third',
+          'url_fourth'
+        ])
+        filename = "tasks_%1.3f.csv" % ((19-form_id)/19)
+        filename = os.path.join(dirname, "output", filename)
+        export_csv = df.to_csv(filename, index = None, header=True, encoding='utf-8') 
         forms.append(form)
 
     df = pd.DataFrame(result, columns= [
