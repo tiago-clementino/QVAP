@@ -1,0 +1,1472 @@
+<!--
+
+	Script desenvolvido por:
+	
+		Tiago Clementino 
+		
+	com base no trabalho de [1]:
+
+		David Candeia Medeiros Maia
+		Nazareno Andrade
+		Raquel Vigolvino Lopes
+		Flávio Figueiredo
+		Jefferson Neves
+		Mariana Souto
+		Ely Ferreira
+
+	[1] https://contribua.org/project/ruascampina/
+
+-->
+    
+<link rel="stylesheet" href="https://contribua.org/comoecampina-static/imgs/fonts/cg.css">
+
+<style>
+	body {
+		background-color: #334759;
+		background-image: linear-gradient(30deg, #314456 12%, transparent 12.5%, transparent 87%, #314456 87.5%, #314456),
+		linear-gradient(150deg, #314456 12%, transparent 12.5%, transparent 87%, #314456 87.5%, #314456),
+		linear-gradient(30deg, #314456 12%, transparent 12.5%, transparent 87%, #314456 87.5%, #314456),
+		linear-gradient(150deg, #314456 12%, transparent 12.5%, transparent 87%, #314456 87.5%, #314456),
+		linear-gradient(60deg, #34495E 25%, transparent 25.5%, transparent 75%, #34495E 75%, #34495E), 
+		linear-gradient(60deg, #34495E 25%, transparent 25.5%, transparent 75%, #34495E 75%, #34495E);
+		background-size:80px 140px;
+		background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+	}
+	p.title-cg {
+		font-size: 28px;
+		line-height: 75px;
+		text-transform: uppercase;
+		color: #fff;
+	}
+	p.subtitle-cg {
+		font-size: 24px;
+		line-height: 64px;
+		color: #fff;
+	}
+	@media (max-width: 768px) {
+		p.title-cg {
+			font-size: 22px;
+			line-height: 32px;
+		}
+		p.subtitle-cg {
+			font-size: 18px;
+			line-height: 28px;
+		}	
+	}
+	@media screen and (min-width: 768px) {
+		#taskpresenter {
+			margin-bottom: -50px;
+		}
+	}
+	.up {
+		color: #2ecc71;
+	}
+	.down {
+		color: #e74c3c;
+	}
+	div#skeleton {
+		margin-bottom: 20px;
+	}
+	div#skeleton .col-xs-6 {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+	div#skeleton-finished {
+		margin-bottom: 40px;
+		color: #fff;
+	}
+	div#logo {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+	#imgs-wrapper {
+		margin: auto;
+	}
+	#imgs-wrapper-2 {
+		margin: auto;
+	}
+	#imgs-wrapper-3 {
+		margin: auto;
+	}
+	p.big {
+		font-size: 1.3em;
+	}
+	div.div-thumbnail:hover {
+		cursor: pointer;
+	}
+	img.img-thumbnail {
+		border-color: #fff;
+	}
+	img.img-safety-up {
+		background-color: #2ecc71;
+		border-color: #2ecc71;
+	}
+	img.img-safety-down {
+		background-color: #e74c3c;
+		border-color: #e74c3c;
+	}
+	img.img-nice-up {
+		background-color: #2ecc71;
+		border-color: #2ecc71;
+	}
+	img.img-nice-down {
+		background-color: #e74c3c;
+		border-color: #e74c3c;
+	}
+	div.score {
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	div.separator {
+		height: 23px;
+	}
+	.btn-rounded {
+	    position: relative;
+	    top: -75px;
+	    width: 180px;
+	    height: 180px;
+		border-radius: 50%;
+	    margin-bottom: -50px;
+	    font-size: 28px;
+	    z-index: 1;
+	    background-color: #d8ce02;
+	    border: solid 6px #fff;
+	    transition: all 1s;
+	    color: #fff;
+	     display: inline-flex;
+  		flex-direction: row;
+  		justify-content: center;
+  		align-items: center;
+	}
+	@media (max-width: 768px) {
+		.btn-rounded {
+			width: 130px;
+	    		height: 130px;	
+			font-size: 20px;
+		}
+	}
+	.btn-rounded:hover {
+	    background-color: #f9f03b;
+	    border: solid 6px #fff;
+	}
+	span.icon-cg {
+		font-size: 7em;
+	    transition: all 0.5s;
+	    color: #fff;
+	}
+	span.icon-cg-up {
+		font-size: 5em;
+		color: #2ecc71;
+	}
+	span.icon-cg-up-lg {
+		font-size: 4em;
+		color: #2ecc71;
+	}
+	span.icon-cg-down {
+		font-size: 5em;
+		color: #e74c3c;
+	}
+	span.icon-cg-down-lg {
+		font-size: 4em;
+		color: #e74c3c;
+	}
+	@media(max-width: 768px) {
+		span.icon-cg-down-lg,
+		span.icon-cg-up-lg {
+			font-size: 3em;
+			line-height: 67px;
+		}
+	}
+	div.icon-wrapper {
+		position: absolute;
+		text-align: center;
+		width: 100%;
+		top: 50%;
+		margin-top: -45px;
+		margin-left: -15px;
+	}
+	@media(max-width: 768px) {
+		div.icon-wrapper {
+			margin-left: -5px;
+		}
+	}
+	.alert {
+		position: fixed;
+		z-index: 999;
+		right: 20px;
+	}
+	.modal p {
+		font-size: 14px;
+		line-height: 16px;
+	}
+	.modal-sm .modal-header {
+		padding: 0;
+	}
+	.modal-sm .modal-header .close {
+		position: absolute;
+		top: 5px;
+		right: 8px;
+		color: #fff;
+		opacity: 1;
+	}
+	.modal-sm .modal-header img {
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+	}
+	@media (min-width: 768px) {
+		.modal-sm {
+		  width: 450px;
+		}
+	}
+	.modal-backdrop.in {
+		opacity: 0.8;
+	}
+	.carousel-indicators {
+		bottom: 0;
+		margin-bottom: 0;
+	}
+	.carousel-indicators li {
+		border-color: #34495E;
+	}
+	.carousel-indicators .active {
+		background-color: #34495E;
+	}
+	.wrapper {
+		margin: 0 auto; 
+		width: 960px; 
+		color: #B0B0B0;
+		background-color: #F7F7F7;
+		border-color: #DDD;
+		display: inline-block;
+		padding: 0;
+		width: 24px;
+		height: 24px;
+		line-height: 22px;
+		text-align: center;
+		position: static;
+		float: none;
+		margin: 0 2px!important;
+		color: grey;
+		border: 1px solid #CCC;
+		background-color: #FFF;
+		border-radius: 100%;
+	}
+	label {
+		font-weight: bold;
+	}
+	#userProgress {
+		margin-top: 10px;
+	}
+
+	
+</style>
+<div id="taskpresenter" ng-app="QVAP" ng-controller="MainController as MainCtrl" style="display:none;">
+	<!-- Success and Error Messages for the user -->
+	<div id="success" class="alert alert-success alert-dismissible" role="alert" style="display:none;">
+		<!--<i class="icon-ok"></i><strong> Sua resposta foi salva!</strong> -->
+		<button type="button" class="close" data-dismiss="alert" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+		<li class="fa fa-2x fa-check pull-left"></li> <strong id="i18n_welldone_text"> Your answer has been saved!</strong>
+	</div>
+	<div id="stop_option" class="alert alert-success alert-dismissible" role="alert" style="display:none;">
+		<!--<i class="icon-ok"></i><strong> Sua resposta foi salva!</strong> -->
+		<button type="button" class="close" data-dismiss="alert" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+		<li class="fa fa-2x fa-check pull-left"></li> <strong id="i18n_stop_text"> Your justification has been saved! You're not requested to answer all comparisons, feel comfortable to stop when you want</strong>
+	</div>
+	<div id="loading" class="alert alert-info alert-dismissible" role="alert" style="display:none;">
+		<span id="i18n_loading_next_task">Loading next task...</span>
+	</div>
+	<div id="error" class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
+		<strong id="i18n_error">Ops! Something wrong.</strong>
+		<br/>
+		<div class="alert-actions">
+			<a id="i18n_reload" class="btn btn-danger" href="https://contribua.org/project/QVAP/newtask">Reload</a>
+		</div>
+	</div>
+	<!-- End Success and Error Messages for the user -->
+
+	<!-- Mandadory steps demanding to the user -->
+	<div id="iagree_needed" class="alert alert-info alert-dismissible" role="alert" style="display:none;">
+		<li class="fa fa-2x fa-info pull-left"></li> <strong id="i18n_term_needed">At first you must agree the consent term.</strong>
+		<div class="alert-actions">
+			<a id="i18n_ok_btn" class="btn btn-info" data-toggle="modal" data-target="#modalProfile" href="#" ng-click="showIAgree()">Ok</a>
+		</div>
+	</div>
+	<div id="profile_needed" class="alert alert-info alert-dismissible" role="alert" style="display:none;">
+		<li class="fa fa-2x fa-info pull-left"></li> <strong id="i18n_profile_need">At first you must fill out the full profile form.</strong>
+		<div class="alert-actions">
+			<a id="i18n_ok_btn2" class="btn btn-info" data-toggle="modal" data-target="#modalProfile" href="#" ng-click="showProfileForm2()">Ok</a>
+		</div>
+	</div>
+
+	<!-- Las question -->
+	<div id="modalLastQuestion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Ultima pergunta" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content" ng-init="tab = 1">
+		  
+		  
+  		<!-- tab1 -->
+		<div id="tab1" ng-show="tab === 1">
+				<div class="modal-header">
+					<img src="https://drive.google.com/uc?export=view&id=1yOFUpRCr98wU2mSd90wnXx18XY3U3S46" alt="Qualidade Visual Ambiental Percebida em Embalagens Alimentícias" width="100%">
+				</div>
+				<div class="modal-header">
+					<h4 class="modal-title">&nbsp;&nbsp;&nbsp;<span id="i18n_opinion">Now give us a little more about your opinion</span></h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="useropinion"><span id="i18n_last_question">Overall, describe which visual aids helped you choose the most sustainable looking packaging. Justify, if possible</span>:</label>
+							<textarea rows="5" cols="50" class="form-control" id="useropinion" name="useropinion" ng-model="userProfile.opinion"> 
+							</textarea>
+						</div>
+					</form>
+					<br>
+					<div class="text-center">
+						<button type="button" class="btn btn-primary" ng-click="saveTask()"><span id="i18n_continue3">Continue</span></button>
+					</div>
+				</div>
+		</div>
+		<!--  END tab1 -->
+
+		  
+		  <!-- tab2 -->
+	      <div id="tab2" ng-show="tab === 2">
+			<div class="modal-header">
+				<img src="https://drive.google.com/uc?export=view&id=1yOFUpRCr98wU2mSd90wnXx18XY3U3S46" alt="Qualidade Visual Ambiental Percebida em Embalagens Alimentícias" width="100%">
+			</div>
+			<div class="modal-body">
+				<p align="justify" style="font-size:120%;"><span id="i18n_form_thanks2">Thanks for answering this question! Now for us to save your data, please answer the next packaging comparison</span>.</p>
+				<div class="modal-body">
+					<div class="text-center">
+						<button class="btn btn-default" data-dismiss="modal" aria-label="Ok"><span id="i18n_ok_btn3">Ok</span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  END tab2 -->
+	      <div class="modal-footer">
+	      	<ol class="carousel-indicators">
+				<li ng-click="tab = 1" ng-class="{active:tab === 1}"></li>
+				<li ng-click="tab = 2" ng-class="{active:tab === 2}"></li>
+			</ol>
+	      </div>
+
+	    </div>
+	  </div>
+	</div>
+	<!-- END Tutorial -->
+
+	<!-- Profile -->
+	<div id="modalProfile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Instruções" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content active" ng-init="tabprof = 1">
+
+				
+				<!-- tabprof -->
+				<div id="tab1" ng-show="tabprof === 1">
+					<div class="modal-header">
+					<!--<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+					<img src="https://drive.google.com/uc?export=view&id=1yOFUpRCr98wU2mSd90wnXx18XY3U3S46" alt="Qualidade Visual Ambiental Percebida em Embalagens Alimentícias" width="100%">
+					</div>
+					<div class="modal-body">
+						<p align="justify"><strong id="i18n_welcome">Welcome</strong>. <span id="i18n_welcome_msg">Your contribution is very important to us so that we can build information about perception of environmental value in packaging. </span></p>
+						<div class="text-center">
+							<button class="btn btn-default" ng-click="tabprof = 2"><span id="i18n_next">Next</span></button>
+						</div>
+					</div>
+				</div>
+				<!--  END tabprof -->
+
+				<!-- tab2 -->
+				<div id="tab2" ng-show="tabprof === 2">
+						<!--
+					  <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+						<img src="https://contribua.org/comoecampina-static/imgs/tutorial_01.png" alt="Como é Campina" width="100%">
+					  </div>-->
+		  
+		  
+					  <div class="modal-header">
+						  <!--<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+						  <img src="https://drive.google.com/uc?export=view&id=1yOFUpRCr98wU2mSd90wnXx18XY3U3S46" alt="Qualidade Visual Ambiental Percebida em Embalagens Alimentícias" width="100%">
+					  </div>
+		  
+		  
+		  
+		  
+		  
+		  
+					  <div class="modal-body">
+						  <p align="justify"><span id="i18n_consent_form">Before to start. we would like that you read our consent term. If you feel confortable, press the 'i agree' button and proceed.</span></p>
+						  <div class="text-center">
+							  <a id="i18n_read" class="btn btn-default" download target="_blank" type="application/pdf" href="https://drive.google.com/uc?export=view&id=10XmJwhZmXqp-DAPIv-7x-NmcF1yjBMM2">Read term</a>
+							  <button class="btn btn-default" ng-click="iAgreeAndGo()"><span id="i18n_agree">I agree</span></button>
+						  </div>
+					  </div>
+				  </div>
+				  <!--  END tab2 -->
+
+				<div id="tab3" ng-show="tabprof === 3">
+					
+
+					<div class="modal-header">
+						<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+						<img src="https://drive.google.com/uc?export=view&id=1yOFUpRCr98wU2mSd90wnXx18XY3U3S46" alt="Qualidade Visual Ambiental Percebida em Embalagens Alimentícias" width="100%">
+					</div>
+					<div class="modal-header">
+						<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+				        </div>
+					<div class="modal-body">
+						<p align="justify" style="font-size:120%;"> <span id="i18n_info">We would like to know a bit more about you and for this we would like to ask you some questions, can you answer them? Our analysis will be completely performed with anonymized data, so we will not take a look specifically at your data and neither relate them to you.</span></p>
+						<div class="text-center">
+							<button class="btn btn-primary" ng-click="tabprof = 4"><span id="i18n_yes">Yes</span></button>
+							<!--<button type="button" class="btn btn-default" data-dismiss="modal"><span id="i18n_no">No</span></button>-->
+						</div>
+					</div>
+				</div>
+				 <div id="tab4" ng-show="tabprof === 4">
+					<div class="modal-header">
+						<h4 class="modal-title">&nbsp;&nbsp;&nbsp;<span id="i18n_more">Tell us a bit more about you </span></h4>
+						<!--<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="userage"><span id="i18n_age">Age</span>:</label>
+								<input class="form-control" id="userage" type="number" min="1" max="120" step="1" name="userage" ng-model="userProfile.age">
+							</div>
+							<div class="form-group">
+								<label for="usersex"><span id="i18n_sex">Sex</span>:</label>
+								<select class="form-control" id="usersex" name="usersex" ng-model="userProfile.sex">
+									<option value="M" id="i18n_men">Man</option>  
+									<option value="F" id="i18n_women"> Woman</option>  
+									<option value="F" id="i18n_other"> Other</option> 				
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="useremail"><span id="i18n_email">Email</span>:</label>
+								<input class="form-control" id="useremail" name="useremail" type="text" ng-model="userProfile.email">
+							</div>
+							<div class="form-group">
+								<!--<label for="userclass">Classe Social (renda mensal):</label> -->
+								<label for="userclass"><span id="i18n_income">Considering those responsible for the maintenance of your house, the sum of their income in a month fits into which range</span>?</label>
+								<select class="form-control" id="userclass" name="userclass" ng-model="userProfile.clas">
+									<option value="alta" id="i18n_alta">$ 4,422.89 (R$ 14.500) or more</option>  
+									<option value="media alta" id="i18n_med_alta">$ 2,211.45 (R$ 7.250) to $ 4,422.88 (R$ 14.499,99)</option>  
+									<option value="media" selected id="i18n_media">$ 884.58 (R$ 2.900) to $ 2,211.44 (R$ 7.249,99)</option>  
+									<option value="media baixa" id="i18n_med_baixa">$ 442.29 (R$ 1.450) to $ 884.57 (R$ 2.899,99)</option>  
+									<option value="baixa" id="i18n_baixa"> less than $ 442.28 (R$ 1.449,99)</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<!--<label for="userclass">Classe Social (renda mensal):</label> -->
+								<label for="usereduc"><span id="i18n_highest_educ">What is your highest educational level</span>?</label>
+								<select class="form-control" id="usereduc" name="usereduc" ng-model="userProfile.educ">
+									<option value="fundamental" id="i18n_primary_educ">Complete primary education</option>  
+									<option value="medio" id="i18n_high_sch">Complete high school</option>  
+									<option value="tecnico" id="i18n_tech_level">Technical level</option>
+									<option value="superior incompleto" selected id="i18n_incomplete_higher_educ">Incomplete higher education</option>  
+									<option value="superior completo" id="i18n_complete_higher_educ">Complete higher education</option>  
+									<option value="especializacao" id="i18n_specialization">Specialization</option>
+									<option value="mestrado" id="i18n_masters">Master's degree</option>
+									<option value="doutorado" id="i18n_doctorate">Doctorate degree</option>
+									<option value="pos-doutorado" id="i18n_post_doctoral">Post doctoral</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="userstate"><span id="i18n_state">In which state do you currently live</span>:</label>
+								<input class="form-control" id="userstate" name="userstate" type="text" ng-model="userProfile.state">
+							</div>
+							<div class="form-group">
+								<label for="usercity"><span id="i18n_city">In which city do you currently live</span>:</label>
+								<input class="form-control" id="usercity" name="usercity" type="text" ng-model="userProfile.city">
+							</div>
+							<div class="form-group">
+								<label for="background_01"><span id="i18n_background_01">Do you know someone of these terms: Sustainability, environmental value and ecological orientation</span>?</label>
+								<select class="form-control" id="background_01" name="background_01" ng-model="userProfile.background_01">		<option value="yes" id="i18n_yes2">Yes</span></option>  
+									<option value="no" id="i18n_no2">No</span></option>   		
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="background_02"><span id="i18n_background_02">Do you know what ecologically sustainable packaging is</span>?</label>
+								<select class="form-control" id="background_02" name="background_02" ng-model="userProfile.background_02">
+									<option value="yes" id="i18n_yes3">Yes</span></option>  
+									<option value="no" id="i18n_no3">No</span></option>  					
+								</select>
+							</div>
+						</form>
+						<br>
+						<div class="text-center">
+							<button type="button" class="btn btn-primary" ng-click="tabprof = 5"><span id="i18n_continue">Continue</span></button>
+						</div>
+					</div>
+					<!--<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Continuar</button>
+					</div>-->
+			</div>
+			<div id="tab5" ng-show="tabprof === 5">
+
+				
+				<div class="modal-header">
+					<!--<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+					<img src="https://drive.google.com/uc?export=view&id=1yOFUpRCr98wU2mSd90wnXx18XY3U3S46" alt="Qualidade Visual Ambiental Percebida em Embalagens Alimentícias" width="100%">
+				</div>
+				<div class="modal-header">
+					<!--<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+				</div>
+				<div class="modal-body">
+					<p align="justify" style="font-size:120%;"><span id="i18n_form_thanks">Thanks for answering these questions!</span></p>
+					<div class="text-center">
+						<button type="button" class="btn btn-primary" ng-click="tabprof = 6"><span id="i18n_continue2">Continue</span></button>
+					</div>
+				</div>
+				
+			</div>
+
+			<div id="tab6" ng-show="tabprof === 6">
+					<div class="modal-header">
+					  <!--<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>-->
+					  <img src="https://drive.google.com/uc?export=view&id=1I-9P8bInZSxFxgA7C1QRIEvgLB9ccOMW" alt="" width="100%">
+					</div>
+					<div class="modal-body">
+						<p align="justify"><span id="i18n_tutorial1">Give your opinion by choosing from the four packaging</span> <span class="up" id="i18n_most_eco_sustainable_1">at first that 'looks like' the most ecologically sustainable</span> <span id="i18n_and">and</span> <span class="down" id="i18n_least_pleasant1">so that 'looks like' the least one</span>, <span id="i18n_confirm">confirming then</span>.</p>
+						<p align="justify"><span id="i18n_env_sust_pack_are">In this research, environmentally sustainable packaging are those ones that provide greater environmental benefits or impose lower environmental costs, seeking sustainability over their entire life cycle, from confection to disposal</span>.</p>
+						<p align="justify"><span id="i18n_tutorial2">Depending on the amount of answers already given by other contributors a lot of comparisons may be available for being answered, but you're not requested to answer them all! If you may help us with at least 20 answers, it would be of great help</span>.</p>
+						<!--<div class="text-center">
+							<button class="btn btn-default" ng-click="tab = 4"><span id="i18n_next2">Start</span></button>
+						</div>-->
+					  <div class="modal-body">
+						<div class="text-center">
+							<button class="btn btn-default" data-dismiss="modal" aria-label="Começar"><span id="i18n_start">Start</span></button>
+						</div>
+					</div>
+					</div>
+				</div>
+
+			<div class="modal-footer">
+			      	<ol class="carousel-indicators">
+						<li ng-click="tabprof = 1" ng-class="{active:tabprof === 1}"></li>
+						<li ng-click="tabprof = 2" ng-class="{active:tabprof === 2}"></li>
+						<li ng-click="tabprof = 3" ng-class="{active:tabprof === 3}"></li>
+						<li ng-click="tabprof = 4" ng-class="{active:tabprof === 4}"></li>
+						<li ng-click="tabprof = 5" ng-class="{active:tabprof === 5}"></li>
+						<li ng-click="tabprof = 6" ng-class="{active:tabprof === 6}"></li>
+				</ol>
+		      </div>
+		</div>
+	     </div>
+	</div><!-- /.modal -->
+	<!-- END Profile -->
+
+	<!-- Task skeleton -->
+	<div id="skeleton">
+		
+		<div class="score" ng-style="readyToAnswer() && {'display': 'none'} || {'display': 'block'}">
+			<div class="row">
+				<div ng-show="selectingTheMost()">
+					<div class="col-xs-2 col-sm-3 text-right">
+						<span class="icon-cg-lg icon-cg-up-lg fa fa-thumbs-up"></span>
+					</div>
+					<div class="col-xs-10 col-sm-9">
+						<p class="title-cg"><span id="i18n_question1">Which packaging looks</span> <strong class="up"><span id="i18n_more_sustainable">more sustainable</span></strong>?&nbsp;</p>
+					</div>
+				</div>
+				<div ng-hide="selectingTheMost()">
+					<div class="col-xs-2 col-sm-3 text-right">
+						<span class="icon-cg-lg icon-cg-down-lg fa fa-thumbs-down"></span>
+					</div>
+					<div class="col-xs-10 col-sm-9">
+						<p class="title-cg"><span id="i18n_question2">Which packaging looks</span> <strong class="down"><span id="i18n_less_sustainable">less sustainable</span></strong>?</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="score" ng-style="readyToAnswer() && {'display': 'block'} || {'display': 'none'}">
+			<div class="row">
+				<div ng-show="true">
+					<div class="col-xs-10 col-sm-9">
+						<p class="title-cg"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="imgs-wrapper" resize ng-style="style()" ng-show="task_phase === 0">
+			<div class="row">
+				<div
+					id="imgA"
+					class="col-xs-6 col-lg-5 col-lg-offset-1 div-thumbnail"
+					ng-click="select(task.info.url_first)">
+					<div class="icon-wrapper">
+						<span
+							class="icon-cg"
+							ng-class="isSelectedIcon(task.info.url_first)"></span>
+					</div>
+					<img
+						class="img-thumbnail" width="100%" alt=""
+						ng-src="{{task.info.url_first}}"
+						ng-class="isSelected(task.info.url_first)">
+				</div>
+				<div
+					id="imgB"
+					class="col-xs-6 col-lg-5 div-thumbnail"
+					ng-click="select(task.info.url_second)">
+					<div class="icon-wrapper">
+						<span
+							class="icon-cg"
+							ng-class="isSelectedIcon(task.info.url_second)"></span>
+					</div>
+					<img
+						class="img-thumbnail" width="100%" alt=""
+						ng-src="{{task.info.url_second}}"
+						ng-class="isSelected(task.info.url_second)">
+				</div>
+            </div>
+			<div class="separator text-center" resize ng-style="style()">
+				<button
+					id="btn-answer"
+					class="btn btn-rounded"
+					ng-show="readyToAnswer()"
+					ng-click="saveTask()"><span class="fa fa-check-circle-o"></span>&nbsp<span id="i18n_confirm2">Confirm</span></button>
+			</div>
+			<div class="row">
+				<div
+					id="imgC"
+					class="col-xs-6 col-lg-5 col-lg-offset-1 div-thumbnail"
+					ng-click="select(task.info.url_third)">
+					<div class="icon-wrapper">
+						<span
+							class="icon-cg"
+							ng-class="isSelectedIcon(task.info.url_third)"></span>
+					</div>
+					<img
+						class="img-thumbnail" width="100%" alt=""
+						ng-src="{{task.info.url_third}}"
+						ng-class="isSelected(task.info.url_third)">
+				</div>
+				<div
+					id="imgD"
+					class="col-xs-6 col-lg-5 div-thumbnail"
+					ng-click="select(task.info.url_fourth)">
+					<div class="icon-wrapper">
+						<span
+							class="icon-cg"
+							ng-class="isSelectedIcon(task.info.url_fourth)"></span>
+					</div>
+					<img
+						class="img-thumbnail" width="100%" alt=""
+						ng-src="{{task.info.url_fourth}}"
+						ng-class="isSelected(task.info.url_fourth)">
+				</div>
+			</div>
+		</div>
+	<br> <br>
+
+	</div>
+	<!-- END Task skeleton -->
+	<!-- Task skeleton finished -->
+	<div id="skeleton-finished" class="text-center" style="display:none;">
+		<div class="row">
+			<div id="logo" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+				<img src="https://drive.google.com/uc?export=view&id=1yOFUpRCr98wU2mSd90wnXx18XY3U3S46" alt="Qualidade Visual Ambiental Percebida em Embalagens Alimentícias" width="100%">
+			</div>
+		</div>
+		<p class="big"><span id="i18n_congrat">Congratulations! You have completed all tasks</span>.</p>
+		<p><span id="i18n_help">But this project still needs your help</span>.<br><span id="i18n_help2">Help us to spread about the project</span>.</p>
+		<p class="big">
+			<a href="https://twitter.com/contribua" target="_blank"><span class="icon icon-twitter"></span></a>
+			&nbsp;&nbsp;
+			<a href="https://twitter.com/contribua" target="_blank"><span class="icon icon-facebook"></span></a>
+			&nbsp;&nbsp;
+			<a href="https://twitter.com/contribua" target="_blank"><span class="icon icon-google-plus"></span></a>
+		</p>
+	</div>
+	<!-- User progress -->
+	<div id="others-controls">
+		<!--<div class="row">
+			<div id="userProgress" class="col-lg-10 col-lg-offset-1">
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{userProgress.done}}" aria-valuemin="0" aria-valuemax="{{userProgress.total}}" ng-style="{'width': (userProgress.progress | number : 2) + '%'}">
+						<span class="sr-only">{{userProgress.progress | number : 2}}%</span>
+					</div>
+				</div>
+			</div>
+		</div> -->
+		<div class="row">
+			<!--<div class="col-sm-9 col-sm-offset-1 text-center">
+				      <a id="cantchoose" href="#" class="btn btn-link btn-sm" data-toggle="modal" ng-click="saveTaskTie()" ng-show="task_phase === 0"><font size="5" style="color:white"><span id="i18n_equals">I can't choose</span></font></a> 
+			</div>-->
+			<div class="col-sm-2 text-right">
+             			 <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modalProfile" ng-click="tabprof = 6"><font size="5" style="color:white"><span id="i18n_help_btn">Help</span></font></a>
+			</div>
+		</div>
+	</div>
+	<br> <br> <br>
+	<!-- END User progress -->
+</div>
+<!-- END ALL -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-cookies.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF7s1PZTdCouw6G_Wa92i9Ny4QQqPTCIU&libraries=places"></script>
+<script src="https://contribua.org/comoecampina-static/imgs/dist/fabric.js"></script>
+<!--<script src="https://drive.google.com/uc?export=view&id=1ipKBGVILPhM_lzWVx8Wpnr_NuHEb5zR4"></script>
+<script src="https://drive.google.com/uc?export=view&id=1vWwtIsoz3-xn9csrbqbrRl9qlazJZYeJ"></script>
+<script src="https://drive.google.com/uc?export=view&id=1_7_eJCs-sY1_o8p1dqtZqLYgcSTCq1Sn"></script> -->
+<!--<script src="https://contribua.org/comoecampina-static/imgs/kinetic-v4.7.2.min.js" type="text/javascript"></script>
+<script src="https://contribua.org/comoecampina-static/imgs/game.js"></script> -->
+<script>
+// Default language
+var userLocale = "pt_br";
+// Translations
+var messages = {"en": {
+                        "i18n_welldone_text": "Your answer has been saved!",
+                        "i18n_stop_text": "Your justification has been saved! You're not requested to answer all comparisons, feel comfortable to stop when you want",
+                        "i18n_loading_next_task": "Loading next task...",
+                        "i18n_error": "Ops! Something wrong.",
+                        "i18n_reload": "Reload",
+                        "i18n_welcome": "Welcome",
+						"i18n_welcome_msg": "Your contribution is very important to us so that we can build information about perception of environmental value in packaging.",
+						"i18n_consent_form": "Before to start, check our consent form. If you feel confortable, press the 'i agree' button and proceed.",
+						"i18n_next": "Next",
+						"i18n_read": "Read term",
+                        "i18n_agree": "I agree",
+                        "i18n_tutorial1": "Give your opinion by choosing from the four packaging",
+                        "i18n_most_eco_sustainable_1": "at first that 'looks like' the most ecologically sustainable",
+                        "i18n_and": "and",
+                        "i18n_least_pleasant1": "so that 'looks like' the least one",
+			"i18n_tutorial2" : "Depending on the amount of answers already given by other contributors a lot of comparisons may be available for being answered, but you're not requested to answer them all! If you may help us with at least 20 answers, it would be of great help",
+                        "i18n_confirm": "confirming then",
+			"i18n_start": "Start",
+			"i18n_info": "We would like to know a bit more about you and for this we would like to ask you some questions, can you answer them? Our analysis will be completely performed with anonymized data, so we will not take a look specifically at your data and neither relate them to you.",
+			"i18n_yes": "Yes",
+			"i18n_yes2": "Yes",
+			"i18n_no2": "No",
+			"i18n_yes3": "Yes",
+			"i18n_no3": "No",
+			"i18n_more": "Tell us a bit more about you",
+			"i18n_age": "Age",
+			"i18n_sex": "Sex",
+			"i18n_email": "Email",
+			"i18n_men": "Man",
+			"i18n_women": "Woman",
+			"i18n_other": "Other",
+			"i18n_income": "Considering those responsible for the maintenance of your house, the sum of their income in a month fits into which range",
+			"i18n_highest_educ":"What is your highest educational level",
+			"i18n_alta": "$ 4,422.89 (R$ 14.500) or more",
+			"i18n_med_alta": "$ 2,211.45 (R$ 7.250) to $ 4,422.88 (R$ 14.499,99)",
+			"i18n_primary_educ": "Complete primary education",
+			"i18n_high_sch":"Complete high school",
+			"i18n_tech_level":"Technical level",
+			"i18n_incomplete_higher_educ":"Incomplete higher education",
+			"i18n_complete_higher_educ":"Complete higher education",
+			"i18n_specialization":"Specialization",
+			"i18n_masters":"Master's degree",
+			"i18n_doctorate":"Doctorate degree",
+			"i18n_post_doctoral":"Post doctoral",
+			"i18n_media": "$ 884.58 (R$ 2.900) to $ 2,211.44 (R$ 7.249,99)",
+			"i18n_med_baixa": "$ 442.29 (R$ 1.450) to $884.57 (R$ 2.899,99)",
+			"i18n_baixa": "less than $ 442.28 (R$ 1.449,99)",
+			"i18n_state": "In which state do you currently live",
+			"i18n_city": "In which city do you currently live",
+			"i18n_background_01": "Do you know someone of these terms: Sustainability, environmental value or ecological orientation",
+			"i18n_background_02": "Do you know what ecologically sustainable packaging is",
+			"i18n_continue": "Continue",
+			"i18n_continue2": "Continue",
+			"i18n_continue3": "Continue",
+			"i18n_form_thanks": "Thanks for answering these questions!",
+			"i18n_form_thanks2": "Thanks for answering this question! Now for us to save your data, please answer the next packaging comparison",
+			"i18n_question1": "Which packaging looks",
+			"i18n_question2": "Which packaging looks",
+			"i18n_more_sustainable": "more sustainable",
+			"i18n_less_sustainable": "less sustainable",
+			"i18n_confirm2": "Confirm",
+			"i18n_congrat": "Congratulations! You have completed all tasks",
+			"i18n_help": "But this project still needs your help",
+			"i18n_help2": "Help us to spread about the project",
+			//"i18n_equals": "I can't choose",
+			"i18n_help_btn": "Help",			
+			"i18n_ok_btn": "Ok",		
+			"i18n_ok_btn2": "Ok",		
+			"i18n_ok_btn3": "Ok",
+			"i18n_term_needed": "At first you must agree the consent term.",
+			"i18n_profile_need": "At first you must fill out the full profile form.",
+			"i18n_env_sust_pack_are": "In this research, environmentally sustainable packaging are those ones that provide greater environmental benefits or impose lower environmental costs, seeking sustainability over their entire life cycle, from confection to disposal",
+			"i18n_opinion": "Now give us a little more about your opinion",
+			"i18n_last_question":"Overall, describe which visual aids helped you choose the most sustainable looking packaging. Justify, if possible"
+                      },
+        "pt_br": {
+                        "i18n_welldone_text": "Sua resposta foi salva!",
+                        "i18n_stop_text": "Sua justificativa foi salva! Lembre-se que você não é obrigado a responder todas as comparações, você pode parar assim que desejar",
+                        "i18n_loading_next_task": "Carregando próxima tarefa...",
+                        "i18n_error": "Ops! Algo errado.",
+                        "i18n_reload": "Recarregar",
+                        "i18n_welcome": "Seja bem-vindo",
+						"i18n_welcome_msg": "Sua contribuição é muito importante para podermos construir informação acerca da percepção do valor ambiental em embalagens.",
+						"i18n_consent_form": "Antes de começar, verifique nosso termo de consentimento. Se você se sentir confortável com isto, pressione o botão 'eu concordo' e prossiga.",
+						"i18n_next": "Próximo",
+						"i18n_read": "Ler termo",
+                        "i18n_agree": "Eu concordo",
+						"i18n_tutorial1": "Dê sua opinião escolhendo dentre as quatro embalagens",
+						"i18n_most_eco_sustainable_1": "primeiro aquela que 'aparenta' ser a mais ecologicamente sustentável",
+                        "i18n_and": "e",
+                        "i18n_least_pleasant1": "depois a que 'aparenta' ser a menos ecologicamente sustentável",
+			"i18n_tutorial2" : "Dependendo da quantidade de respostas já fornecidas por outros contribuidores, uma grande quantidade de comparações pode estar disponível para ser respondida. Você não é obrigado a responder todas! Se puder nos ajudar com ao menos 20 respostas, já será de grande ajuda",
+                        "i18n_confirm": "confirmando em seguida",
+			"i18n_start": "Começar",
+			"i18n_info": "Gostaríamos de conhecer um pouco mais sobre você e para isso gostaríamos de lhe fazer algumas perguntas, você poderia respondê-las? Nossa análise irá trabalhar com dados anonimizados, então não iremos avaliar especificamente seus dados e nem relacioná-los a você.",
+			"i18n_yes": "Sim",
+			"i18n_yes2": "Sim",
+			"i18n_no2": "Não",
+			"i18n_yes3": "Sim",
+			"i18n_no3": "Não",
+			"i18n_more": "Conte-nos um pouco mais sobre você",
+			"i18n_age": "Idade",
+			"i18n_sex": "Sexo",
+			"i18n_email": "E-mail",
+			"i18n_men": "Masculino",
+			"i18n_women": "Feminino",
+			"i18n_other": "Outro",
+			"i18n_income": "Considerando os responsáveis pelo sustento da sua casa, a soma de seus rendimentos mensais se enquadra em que faixa",
+			"i18n_highest_educ":"Qual é o seu nível educacional mais alto",
+			"i18n_alta": "R$ 14.500ou mais",
+			"i18n_med_alta": "R$ 7.250 a R$ 14.499,99",
+			"i18n_primary_educ": "Ensino fundamental completo",
+			"i18n_high_sch":"Ensino médio completo",
+			"i18n_tech_level":"Nível técnico",
+			"i18n_incomplete_higher_educ":"Ensino superior incompleto",
+			"i18n_complete_higher_educ":"Ensino superior completo",
+			"i18n_specialization":"Especialização",
+			"i18n_masters":"Mestrado",
+			"i18n_doctorate":"Doutorado",
+			"i18n_post_doctoral":"Pós doutorado",
+			"i18n_media": "R$ 2.900 a R$ 7.249,99",
+			"i18n_med_baixa": "R$ 1.450 a R$ 2.899,99",
+			"i18n_baixa": "menos de R$ 1.449,99",
+			"i18n_state": "Em qual estado você mora atualmente",
+			"i18n_city": "Em qual cidade você mora atualmente",
+			"i18n_background_01": "Você conhece algum destes termos: Sustentabilidade, valor ambiental ou orientação ecológica",
+			"i18n_background_02": "Você sabe o que são embalagens ecologicamente sustentáveis",
+			"i18n_continue": "Continuar",
+			"i18n_continue2": "Continuar",
+			"i18n_continue3": "Continuar",
+			"i18n_form_thanks": "Muito obrigado por responder a estas perguntas!",// Agora para que possamos salvar os seus dados, por favor responda à próxima comparação de embalagens",
+			"i18n_form_thanks2": "Muito obrigado por responder esta pergunta! Agora para que possamos salvar sua resposta, por favor responda à próxima comparação de embalagens",
+			"i18n_question1": "Qual embalagem lhe parece",
+			"i18n_question2": "Qual embalagem lhe parece",
+			"i18n_more_sustainable": "mais sustentável",
+			"i18n_less_sustainable": "menos sustentável",
+			"i18n_confirm2": "Confirmar",
+			"i18n_congrat": "Parabéns! Você completou todas as tarefas",
+			"i18n_help": "Mas esse projeto ainda precisa de ajuda",
+			"i18n_help2": "Ajude-nos a divulgar o projeto",
+			//"i18n_equals": "Não consigo escolher",
+			"i18n_help_btn": "Ajuda",			
+			"i18n_ok_btn": "Ok",		
+			"i18n_ok_btn2": "Ok",		
+			"i18n_ok_btn3": "Ok",
+			"i18n_term_needed": "Primeiro você deve concordar com o termo de consentimento.",
+			"i18n_profile_need": "Primeiro você deve preencher o formulário de perfil.",
+			"i18n_env_sust_pack_are": "Nesta pesquisa, embalagens ecologicamente sustentáveis são aquelas que fornecem benefícios ambientais maiores ou impõem custos ambientais menores, buscando sustentabilidade ao longo de todo seu ciclo de vida, da confecção ao descarte",
+			"i18n_opinion": "Agora nos dê um pouco mais de sua opinião",
+			"i18n_last_question":"De modo geral, descreva os recursos visuais que te ajudaram a escolher as embalagens com aparência mais sustentável. Justifique, se possível"
+                      },
+               };
+
+function i18n_translate() { 
+    // Update userLocale with server side information
+	/*pybossaLocale = document.getElementById('PYBOSSA_USER_LOCALE').textContent.trim();
+    if (pybossaLocale !== null && pybossaLocale !== undefined){
+		if (pybossaLocale.length > 0 && messages.hasOwnProperty(pybossaLocale)){
+			userLocale = pybossaLocale;
+		}
+    }*/
+    var ids = Object.keys(messages[userLocale]);
+    for (i=0; i<ids.length; i++) {
+		//console.log("["+ids[i] + "]   " + messages[userLocale][ids[i]]);
+		var myElement = document.getElementById(ids[i]);
+		if (typeof myElement != "undefined" && myElement != null) {
+			document.getElementById(ids[i]).textContent = messages[userLocale][ids[i]];
+		}else{
+			console.log(ids[i] + "    " + messages[userLocale][ids[i]]);
+		}
+		
+    }
+}
+
+	var apiUrl = 'https://contribua.org/api/';
+	var projectId = '644';
+	var formLastQuestionStep = 20;
+	//var formProfileStep = 0;//6;it was changed to show the profile step at first
+	var app = angular.module('QVAP', ['ngCookies']);
+	app.controller('MainController', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+		$scope.height = window.innerHeight;
+		$scope.width = window.innerWidth;
+		$scope.tab = 1;
+		$scope.tabprof = 1;
+		$scope.userProgress = {
+			user_id: '',
+			total: 400,//default
+			done: 0,
+			progress: 0 
+		}
+		$scope.userProfile = {
+			age: 0,
+			sex: '',
+			email: '',
+			clas: '',
+			educ: '',
+			state: '',
+			city: '',
+			background_01: '',//Conhece algum deste termos?
+			background_02: '',//Sabe o que são embalagens sustentáveis?
+			opinion: ''
+		}
+        $scope.shouldSaveProfile = false;
+        $scope.shouldSaveOpinion = false;
+		//$scope.task_phase = 0;//Used to controll task phases: select best and worst image, mark points in best image, mark points in worst image
+		$scope.iagree = false;
+		var getIAgree = function(){
+			if($scope.iagree){
+				return $scope.iagree;
+			}
+			var hasDisplayedTerm = $cookies.get('cg-term-x');		
+  			if (typeof hasDisplayedTerm != "undefined") {
+				if(hasDisplayedTerm === 'true'){
+					$scope.iagre = true;
+					return true;
+				}else{
+					return false;
+				}
+    		} else {
+    			return false;
+    		}
+		}
+
+		var iAgree = function(){
+			console.log("aqui");
+			var hasDisplayedTerm = $cookies.get('cg-term-x');		
+			$scope.iagree = true;	
+  			if (typeof hasDisplayedTerm == "undefined") {
+	    		$cookies.put('cg-term-x', 'true');
+				//$('#modalTutorial').modal();
+    		} else {
+    			return;
+    		}	
+		}
+
+		var checkProfile = function(){
+			//console.log($scope.userProfile);
+			if ($scope.userProfile.age === '' || $scope.userProfile.age === 0 ||
+					$scope.userProfile.sex === '' ||
+					$scope.userProfile.email === '' ||
+					$scope.userProfile.clas === '' ||
+					$scope.userProfile.educ === '' ||
+					$scope.userProfile.background_01 === '' ||
+					$scope.userProfile.background_02 === '' ||
+					$scope.userProfile.state === '' ||
+					$scope.userProfile.city === '') {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		var checkLastQuestion = function(){
+			//console.log($scope.userProfile);
+			if ($scope.userProfile.opinion === '') {
+				return false;
+			} else {				
+	    		//$cookies.put('last-question-x', $scope.userProfile.opinion);
+				return true;
+			}
+		}
+		var showLastQuestion = function() {
+  			var hasDisplayedOpinion = $cookies.get('last-question-x');
+  			if (typeof hasDisplayedOpinion == "undefined") {
+				$scope.tab = 1;
+				$('#modalLastQuestion').modal();
+    		} else {
+    			return;
+    		}
+		}
+		var showTutorial = function() {
+  			var hasDisplayedTutorial = $cookies.get('tutorial-x');
+  			if (typeof hasDisplayedTutorial == "undefined") {
+	    		$cookies.put('tutorial-x', 'true');
+				$scope.tabprof = 1;
+				$('#modalProfile').modal();
+    		} else {
+    			return;
+    		}
+		}
+
+		var getLastQuestion = function() {
+			var offset = 0;
+			var finishTime;
+			$http.get(apiUrl+'taskrun?project_id='+projectId+'&user_id='+$scope.userProgress.user_id+'&offset='+offset)
+					.then(function(response) {
+						var i;
+						console.log("foi");
+						console.log(response.data.length);
+						if (response.data.length !== 0) {
+							for (i = 0; i < response.data.length; i++) {
+								var currentData = response.data[i];
+								// Checks if already have any profile data
+								if (typeof currentData.info.userProfile != "undefined") {
+									var currentFinishTime = new Date(currentData.finish_time);
+									if (finishTime == null || currentFinishTime > finishTime) {
+										finishTime = currentFinishTime;
+										$scope.userProfile = currentData.info.userProfile;
+										$scope.userProfile.age = parseInt($scope.userProfile.age);
+									}
+								}
+							}
+						}
+						
+						console.log(checkLastQuestion());
+						// Calls the form profile if still have data to fill
+						if (!checkLastQuestion()) {
+							$scope.shouldSaveOpinion = true;
+							showLastQuestion();
+						} else if (readyToAnswer()) {
+							$scope.saveTask();
+						}
+					}, function getUserOpinionErrorCallback(response) {
+						console.log('Opinion failed');
+						console.log(response);
+
+						console.log(checkLastQuestion());
+/*
+						var userprofile = JSON.parse($cookies.get('user-profile-x'));
+						console.log(userprofile);
+						if (typeof userprofile != "undefined" && userprofile != null) {
+							if(!checkProfile()){
+								$scope.userProfile = userprofile;
+							}
+						}
+						*/
+						// Calls the form profile if still have data to fill
+						if (!checkLastQuestion()) {
+							$scope.shouldSaveOpinion = true;
+							showLastQuestion();
+						} else if (readyToAnswer()) {
+							$scope.saveTask();
+						}
+					});
+		}
+
+		var getUserProfile = function() {
+			//Iterating through previous profiles
+			var foundInPrevious = false;
+			/*for (i = 0; i < previousProfilesData.length; i++){
+				var currentProfile = previousProfilesData[i];
+				if (currentProfile.id == $scope.userProgress.user_id){//previous answer found
+					$scope.userProfile = currentProfile.userProfile;
+					$scope.userProfile.age = parseInt($scope.userProfile.age);
+					foundInPrevious = true;
+                  			//alert("Encontrei!");
+				}
+			}*/
+
+			if (!foundInPrevious){//Profile not found in previous version, searching at task-run
+				var finishTime;
+				var offset = 0;
+				console.log('set profile')
+				$http.get(apiUrl+'taskrun?project_id='+projectId+'&user_id='+$scope.userProgress.user_id+'&offset='+offset)
+					.then(function(response) {
+						var i;
+						if (response.data.length !== 0) {
+							for (i = 0; i < response.data.length; i++) {
+								var currentData = response.data[i];
+								// Checks if already have any profile data
+								if (typeof currentData.info.userProfile != "undefined") {
+									var currentFinishTime = new Date(currentData.finish_time);
+									if (finishTime == null || currentFinishTime > finishTime) {
+										finishTime = currentFinishTime;
+										$scope.userProfile = currentData.info.userProfile;
+										$scope.userProfile.age = parseInt($scope.userProfile.age);
+									}
+								}
+							}
+						}
+						// Calls the form profile if still have data to fill
+						console.log(checkProfile())
+						if (!checkProfile()) {
+							$scope.shouldSaveProfile = true;
+							$scope.showProfileForm();
+						}// else {
+						//	$scope.shouldSaveProfile = false;
+						//}
+					}, function getUserProfileErrorCallback(response) {
+						console.log('UserProfile failed');
+						
+/*
+						var userprofile = JSON.parse($cookies.get('user-profile-x'));
+						console.log(userprofile);
+						if (typeof userprofile != "undefined" && userprofile != null) {
+							if(!checkProfile()){
+								$scope.userProfile = userprofile;
+							}
+						} */
+
+					});
+
+			}else{//Checking if profile found in previous version is complete
+              	
+				if (!checkProfile()) {
+						$scope.shouldSaveProfile = true;
+						$scope.showProfileForm();
+				} //else {
+                  			//alert("Encontrei prev cheio!");
+				//	$scope.shouldSaveProfile = false;
+				//}
+			}
+			return;
+		}
+
+		var getUserProgress = function() {
+			// console.log('Loading user progress...');
+			$http.get(apiUrl+'project/'+projectId+'/userprogress').then(function(response) {
+					$scope.userProgress.user_id = response.data.user_id;
+					$scope.userProgress.total = response.data.total;
+					$scope.userProgress.done = response.data.done;
+					$scope.userProgress.progress = ($scope.userProgress.total === 0) ? 0 : ($scope.userProgress.done*100)/$scope.userProgress.total;
+
+					// Get user profile (10 steps)
+					//if ($scope.userProgress.done > 0 && $scope.userProgress.done % formProfileStep === 0) {
+					console.log($scope.userProgress);
+					//if ($scope.userProgress.done > 0 && $scope.userProgress.done === 0) {
+					//getUserProfile();
+					//}
+
+					
+					// Get user profile (10 steps)
+					//if ($scope.userProgress.done > 0 && $scope.userProgress.done / formLastQuestionStep >= 1.0) {
+					//	getLastQuestion();
+					//}
+				}, function getUserProgressErrorCallback(response) {
+                    console.log('Request failed');
+                    console.log(response);
+
+					$scope.userProgress.user_id = 0;
+					//$scope.userProgress.total = 400;
+					//$scope.userProgress.done = 0;
+					//$scope.userProgress.progress = ($scope.userProgress.total === 0) ? 0 : ($scope.userProgress.done*100)/$scope.userProgress.total;
+
+					// Get user profile (10 steps)
+					//if ($scope.userProgress.done > 0 && $scope.userProgress.done % formProfileStep === 0) {
+					console.log($scope.userProgress);
+					//getUserProfile();
+					//if ($scope.userProgress.done > 0 && $scope.userProgress.done / formLastQuestionStep >= 1.0) {
+					//	getLastQuestion();
+					//}
+
+					//$('#error').show();
+					//$('#skeleton').hide();
+				});
+		}
+
+		//Variables related to marking images!
+		//var allowedPointsSize = 3;
+		//var avoidPath = false;
+		//var selectedPoints = [[],[],[]];
+		//var selectedPointsMost = [[],[],[]];//[[],[],[]]?
+		//var selectedPointsLess = [[],[],[]];//[[],[],[]]?
+		//var canvas = null;
+		//var markedElements = 0;
+
+		var newTask = function() {
+			$scope.task_phase = 1;
+			getUserProgress();
+			i18n_translate();
+
+			$('#loading').fadeIn();
+
+			/*if (typeof $scope.task != 'undefined' && typeof $scope.task.info != 'undefined') {
+				$scope.task.info.url_first = '';
+				$scope.task.info.url_second = '';
+				$scope.task.info.url_third = '';
+				$scope.task.info.url_fourth = '';
+			}*/
+
+			$http.get(apiUrl+'project/'+projectId+'/newtask').then(function(response) {
+                // Checks if theres no more tasks for the user
+                if (typeof response.data.id != 'undefined') {
+                    $('#loading').hide();
+					unwantedNotification = $('#pybossa-notification');
+					if(typeof unwantedNotification != "undefined" && unwantedNotification != null){
+						unwantedNotification.hide();
+					}
+                    document.getElementById("taskpresenter").style.display = "block";
+
+					var userprofileJSON = $cookies.get('user-profile-x');
+					if (typeof userprofileJSON != "undefined" && userprofileJSON != null) {
+						$scope.userProfile = JSON.parse(userprofileJSON);
+					}
+					$scope.task_phase = 0;
+                    $scope.task = response.data;
+                    //console.log('log 01');
+                    //console.log(response);
+                    //console.log('Loaded task '+$scope.task.id+' '+$scope.task.info.question);
+                    $scope.answer = {
+                        question: $scope.task.info.question,
+                        theMost: '',
+                        theLess: '',
+                        url_first: $scope.task.info.url_first,
+                        url_second: $scope.task.info.url_second,
+                        url_third: $scope.task.info.url_third,
+                        url_fourth: $scope.task.info.url_fourth,
+                        id: $scope.task.info.id,
+                        order: $scope.task.info.order
+                    }
+					$scope.iAgreeAndGo = function(){
+						$scope.tabprof = 3;
+						iAgree();	
+					}
+					$scope.showIAgree = function() {
+						$scope.tabprof = 2;
+						console.log($scope.tabprof);
+						$('#iagree_needed').fadeOut();
+						//$('#modalProfile').modal();
+					}
+					$scope.showProfileForm = function() {
+						$scope.tabprof = 4;
+						$('#modalProfile').modal();
+					}
+					$scope.showProfileForm2 = function() {
+						$scope.tabprof = 4;
+						$('#profile_needed').fadeOut();
+					}
+
+					
+					//if(!checkProfile()){							
+					//	$scope.showProfileForm();
+					//}
+					$scope.shouldSaveProfile = true;
+
+					console.log('vai salvar o usuario? 1');
+					console.log($scope.shouldSaveProfile);
+
+                    $scope.selectingTheMost = function() {
+                        return ($scope.answer.theMost === '' && $scope.answer.theLess === '');
+                    }
+                    $scope.selectingTheLess = function() {
+                        return ($scope.answer.theMost !== '' && $scope.answer.theLess === '');
+                    }
+                    $scope.readyToAnswer = function() {
+                        return ($scope.answer.theMost !== '' && $scope.answer.theLess !== '');
+                    }
+                    $scope.isSelected = function(answer) {
+                        return {
+                            'img-nice-up': ($scope.answer.theMost === answer),
+                            'img-nice-down': ($scope.answer.theLess === answer)
+                        }
+                    }
+                    //Choosing icon to be presented for pleasantness or safety according to best or worst image selected
+                    $scope.isSelectedIcon = function(answer) {
+                        return {
+                            'icon-cg-up fa fa-thumbs-up': ($scope.answer.theMost === answer),
+                            'icon-cg-down fa fa-thumbs-down': ($scope.answer.theLess === answer)
+                        }
+                    }
+
+                    //Selecting best or worst image
+                    $scope.select = function(answer) {
+                        if ($scope.selectingTheMost()) {
+                            if ($scope.answer.theMost === answer) {
+                                $scope.answer.theMost = '';
+                            } else {
+                                $scope.answer.theMost = answer;
+                            }
+                        } else if ($scope.selectingTheLess()) {
+                            if ($scope.answer.theMost === answer) {
+                                $scope.answer.theMost = '';
+                            } else {
+                                $scope.answer.theLess = answer;
+                            }
+                        } else {
+                            $scope.answer.theLess = '';
+                        }
+                    }	
+
+                    // Save task
+                    $scope.saveTaskTie = function(){
+                        $scope.answer.theMost = 'equal';
+                        $scope.answer.theLess = 'equal';
+                        
+                        $scope.saveTask();
+					}
+
+                    $scope.saveTask = function() {
+
+						$scope.tab = 2;
+
+						if(!getIAgree()){
+							$('#iagree_needed').fadeIn();
+							return;
+						}
+
+						//console.log($scope.userProfile);
+						if(!checkProfile()){
+							$('#profile_needed').fadeIn();
+							return;
+						}
+						
+						if(!checkLastQuestion() && $scope.userProgress.done >= formLastQuestionStep){
+							getLastQuestion();
+							return;
+						}
+						//if ($scope.userProgress.done > 0 && $scope.userProgress.done / formLastQuestionStep >= 1.0) {
+						//	getLastQuestion();
+						//}
+
+						//if(!checkProfile()){							
+						//	$scope.showProfileForm();
+						//}
+
+                        //Checking if user profile should be persisted
+                        //var show_stop_option = false;
+						console.log('vai salvar o usuario?');
+						console.log($scope.shouldSaveProfile);
+                        if ($scope.shouldSaveProfile) {
+                            $scope.userProfile.state = document.getElementById("userstate").value;
+							console.log('salvou o usuário');
+                            $scope.userProfile.city = document.getElementById("usercity").value;
+                            $scope.answer.userProfile = $scope.userProfile;
+                            //$scope.shouldSaveProfile = false;
+                            //show_stop_option = true;
+                        }
+						
+                        //Checking if user opinion should be persisted
+                        var show_stop_option = false;
+						console.log('vai salvar a opinião?');
+                        if ($scope.shouldSaveOpinion) {
+                            $scope.userProfile.opinion = document.getElementById("useropinion").value;
+							console.log('salvou a opinião');
+                            $scope.answer.userProfile = $scope.userProfile;
+                            $scope.shouldSaveOpinion = false;
+                            show_stop_option = true;
+                        }
+
+                        //Building answer to be persisted
+                        var taskrun = {
+                            'project_id': $scope.task.project_id,
+                            'task_id': $scope.task.id,
+                            'info': $scope.answer
+                        };
+
+                        //Saving task answers
+                        taskrun = JSON.stringify(taskrun);
+                        //alert(taskrun);
+                        console.log(taskrun);
+
+                        //Asking for points in most and least preferred images
+                        //Saving in database!
+                        $http.post(apiUrl+'taskrun', taskrun).then(function(response) {
+                            // console.log('Saved!');
+                            $("#skeleton").fadeOut(0);
+                            if (show_stop_option){
+								$("#stop_option").fadeIn();
+								setTimeout(function() { $("#stop_option").fadeOut() }, 1000);
+                            }else{
+                                $("#success").fadeIn();
+                            }
+
+							//for anonymous users
+							$scope.userProgress.done = $scope.userProgress.done+1;
+							$scope.userProgress.progress = ($scope.userProgress.total === 0) ? 0 : ($scope.userProgress.done*100)/$scope.userProgress.total;
+
+							console.log($scope.userProfile);
+							var userProfile = JSON.stringify($scope.userProfile);
+							console.log(userProfile);
+							$cookies.put('user-profile-x', userProfile);
+
+                            // After save, calls a new task again
+                            newTask();
+                            $("#skeleton").fadeIn(1000);
+                            setTimeout(function() { $("#success").fadeOut() }, 1000);
+                        }, function saveTaskErrorCallback(response) {
+                            $('#error').show();
+                        });
+
+                        }
+                } else {
+                    $('#skeleton').hide();
+                    $('#loading').hide();
+                    $('#skeleton-finished').show();
+                    $('#others-controls').hide();
+                    $('.row .col-md-12 p').hide();
+                }
+            }, function newTaskErrorCallback(response) {
+                console.log('log 01');
+                console.log(response);
+                console.log('Request failed');
+                $('#error').show();
+                $('#skeleton').hide();
+            });
+		}
+		newTask();
+		showTutorial();
+	}]);
+
+	app.directive('resize', function ($window) {
+	    return function (scope, element) {
+	        var w = angular.element($window);
+	        scope.getWindowDimensions = function () {
+	            return {
+	                'h': w.height(),
+	                'w': w.width()
+	            };
+	        };
+	        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+	            scope.windowWidth = newValue.w;
+	            scope.windowHeight = newValue.h;
+
+	            scope.viewportWidth = newValue.h*1.1;
+
+	            scope.style = function () {
+	            	if (scope.windowHeight*1.1 < scope.windowWidth) {
+		                return {
+	                        	'width': (scope.viewportWidth) + 'px'
+		                };
+	            	} else {
+	            		return;
+	            	}
+	            };
+
+	        }, true);
+
+	        w.bind('resize', function () {
+	            scope.$apply();
+	        });
+	    }
+	});
+
+	//Google autocomplete
+  	var stateInput = document.getElementById('userstate');
+	var options = {
+		types: ['(regions)']
+	};
+	var autocomplete = new google.maps.places.Autocomplete(stateInput, options);
+	var pacContainerInitializedState = false; 
+	$('#userstate').keypress(function() { 
+	    if (!pacContainerInitializedState) { 
+		      $('.pac-container').css('z-index', '10000'); 
+		      pacContainerInitializedState = true;  
+	    } 
+	});
+  	var cityInput = document.getElementById('usercity');
+	options = {
+		types: ['(cities)']
+	};
+	autocomplete = new google.maps.places.Autocomplete(cityInput, options);
+	var pacContainerInitializedCity = false; 
+	$('#usercity').keypress(function() { 
+	    if (!pacContainerInitializedCity) { 
+		      $('.pac-container').css('z-index', '10000'); 
+		      pacContainerInitializedCity = true;  
+	    } 
+	});
+
+</script>
+
