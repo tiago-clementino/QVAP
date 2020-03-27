@@ -73,48 +73,261 @@ if __name__ == "__main__":
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.clock import Clock
+
+import sys, os
+# print( os.environ["PATH"])
+# os.environ["PATH"] += ":%s" % os.path.abspath(os.path.join("screens",""))
+# print( os.environ["PATH"])
+# sys.path.append(os.path.abspath(".."))
+# print( os.environ["PATH"])
+# from time import sleep
+from controler.connect_sqlite import Connection
+from screens.splash import Splash
+from screens.login import Login
+from screens.logup import Logup
+from screens.new import New
+from screens.profile import Profile
+from screens.recents import Recents
+from screens.results import Results
+from screens.target_audience import TargetAudience
 
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
 Builder.load_string("""
-<MenuScreen>:
+
+<Splash>:
+    name: 'splash'
     BoxLayout:
+        pos_hint: {'top': 1}
+        height: 44
+        Image:
+            size: 24, 24
+            source: 'images/splash.png'
+
+<Login>:
+    name: 'login'
+    BoxLayout:
+        id: 'layout'
+        orientation: 'vertical'
+        Label:
+            text: 'Entre com o seu login'
+        TextInput:
+            id: login
+            multiline: False
+            halign: 'left'
+            font_size: 55
+        TextInput:
+            id: password
+            password: True
+            multiline: False
+            halign: 'left'
+            font_size: 55
         Button:
-            text: 'Goto settings'
+            text: 'entrar'
+            on_press: 
+                root.check_login(login,password,msg)
+        Button:
+            text: 'ainda não tenho cadastro'
             on_press: 
                 root.manager.transition.direction = 'left'
-                root.manager.current = 'settings'
+                root.manager.current = 'logup'
         Button:
-            text: 'Quit'
-
-<SettingsScreen>:
+            text: 'sair'
+            on_press: 
+                exit()
+        Label:
+            id: msg
+            text: ''
+<Recents>:
+    name: 'recents'
     BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Consultas recentes'
         Button:
-            text: 'My settings button'
+            text: 'Nova consulta'
+            on_press: 
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'new'
         Button:
-            text: 'Back to menu'
+            text: 'Atualizar cadastro'
+            on_press: 
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'profile'
+        Button:
+            text: 'sair'
+            on_press: 
+                exit()
+<Profile>:
+    name: 'profile'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Atualizações'
+        TextInput:
+            id: email
+            readonly: True
+            multiline: False
+            halign: 'left'
+            font_size: 55
+        Button:
+            text: 'Atualizar senha'
+        Button:
+            text: 'Configurações'
+        Button:
+            text: 'Voltar'
             on_press: 
                 root.manager.transition.direction = 'right'
-                root.manager.current = 'menu'
+                root.manager.current = 'recents'
+        Button:
+            text: 'sair'
+            on_press: 
+                exit()
+<New>:
+    name: 'new'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Nova consulta'
+        Button:
+            text: 'Consultar'
+            on_press: 
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'results'
+        Button:
+            text: 'Definir público alvo'
+            on_press: 
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'results'
+        Button:
+            text: 'Voltar'
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'recents'
+        Button:
+            text: 'sair'
+            on_press: 
+                exit()
+<Results>:
+    name: 'results'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Resultados'
+        Button:
+            text: 'Nova consulta'
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'new'
+        Button:
+            text: 'Consultas recentes'
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'recents'
+        Button:
+            text: 'sair'
+            on_press: 
+                exit()
+<TargetAudience>:
+    name: 'target_audience'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Público alvo'
+        Button:
+            text: 'Voltar'
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'new'
+        Button:
+            text: 'Consultas recentes'
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'recents'
+        Button:
+            text: 'sair'
+            on_press: 
+                exit()
+
+<Logup>:
+    name: 'logup'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Cadastro'
+        TextInput:
+            id: email
+            multiline: False
+            halign: 'left'
+            font_size: 55
+        TextInput:
+            id: password
+            password: True
+            multiline: False
+            halign: 'left'
+            font_size: 55
+        TextInput:
+            id: confirm_password
+            password: True
+            multiline: False
+            halign: 'left'
+            font_size: 55
+        Button:
+            text: 'cadastrar'
+            on_press: 
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'recents'
+        Button:
+            text: 'voltar ao login'
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'login'
+        Button:
+            text: 'sair'
+            on_press: 
+                exit()
 """)
 
 # Declare both screens
-class MenuScreen(Screen):
-    pass
+# class MenuScreen(Screen):
+#     pass
 
-class SettingsScreen(Screen):
-    pass
+# class SettingsScreen(Screen):
+#     pass
 
 # Create the screen manager
 sm = ScreenManager()
-sm.add_widget(MenuScreen(name='menu'))
-sm.add_widget(SettingsScreen(name='settings'))
+lg = Login()
+sm.add_widget(Splash())
+sm.add_widget(lg)
+sm.add_widget(Logup())
+sm.add_widget(Recents())
+sm.add_widget(New())
+sm.add_widget(Results())
+sm.add_widget(TargetAudience())
+sm.add_widget(Profile())
 
 class TestApp(App):
 
     def build(self):
+        Clock.schedule_once(self.screen_switch_one, 3)
         return sm
+
+    def screen_switch_one(a,b):
+        #check login previo
+        if(Login.just_logged(lg.get_connection())):
+            sm.current = 'recents'
+        else:
+            sm.current = 'login'
+
+   
+
+# class TestApp(App):
+
+#     def build(self):
+#         return sm
 
 if __name__ == '__main__':
     TestApp().run()
