@@ -7,7 +7,8 @@ class Connection:
     conn = None
     def __init__(self):
         #self.path_name = Path("data/") / "database.db"
-        self.path_name = "database.db"
+        #self.path_name = context.getDatabasePath("database.db")
+        self.path_name = "//data/data/kvCalc/databases/database.db"
 
     def create_connection(self, path_name=None):
         """ create a database connection to a SQLite database """
