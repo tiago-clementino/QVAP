@@ -5,6 +5,7 @@ from pathlib import Path
 class Connection:
 
     conn = None
+    err = None
     def __init__(self):
         #self.path_name = Path("data/") / "database.db"
         self.path_name = "database.db"
@@ -21,6 +22,7 @@ class Connection:
                 self.conn = sqlite3.connect(path_name.__str__())
             print(sqlite3.version)
         except Error as e:
+            self.err = e
             print(e)
         finally:
             if self.connected() and path_name is not None:

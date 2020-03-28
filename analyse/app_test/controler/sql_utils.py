@@ -1,4 +1,5 @@
-from  collections.abc import Iterable
+from collections.abc import Iterable
+from os import listdir
 
 class SqlUtils:
 
@@ -37,7 +38,7 @@ class SqlUtils:
                 return False
         
         if(msg is not None):
-            msg.text = 'Não conectado ao banco de dados'
+            msg.text = f'Não conectado ao banco de dados: {listdir(".")}'
         else:
             print('Não conectado ao banco de dados')
         return False
