@@ -6,7 +6,8 @@ class Connection:
 
     conn = None
     def __init__(self):
-        self.path_name = Path("data/") / "database.db"
+        #self.path_name = Path("data/") / "database.db"
+        self.path_name = "database.db"
 
     def create_connection(self, path_name=None):
         """ create a database connection to a SQLite database """
