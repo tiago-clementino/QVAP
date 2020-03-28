@@ -33,7 +33,7 @@ class SqlUtils:
             else:
                 print(rows)
                 if(msg is not None):
-                    msg.text = 'Problemas com o banco de dados'
+                    msg.text = f'Problemas com o banco de dados: {rows}'
                 return False
         
         if(msg is not None):
