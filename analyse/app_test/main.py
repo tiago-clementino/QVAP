@@ -92,6 +92,10 @@ from screens.recents import Recents
 from screens.results import Results
 from screens.target_audience import TargetAudience
 
+def logoff():
+    Login.logoff()
+    exit()
+
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
@@ -157,9 +161,16 @@ Builder.load_string("""
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'profile'
         Button:
+            text: 'logoff'
+            on_press: 
+                root.logoff(msg)
+        Button:
             text: 'sair'
             on_press: 
                 exit()
+        Label:
+            id: msg
+            text: ''
 <Profile>:
     name: 'profile'
     BoxLayout:
@@ -276,9 +287,8 @@ Builder.load_string("""
             font_size: 55
         Button:
             text: 'cadastrar'
-            on_press: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'recents'
+            on_press:
+                root.record(email,password,confirm_password,msg)
         Button:
             text: 'voltar ao login'
             on_press: 
@@ -288,6 +298,9 @@ Builder.load_string("""
             text: 'sair'
             on_press: 
                 exit()
+        Label:
+            id: msg
+            text: ''
 """)
 
 # Declare both screens
@@ -309,6 +322,8 @@ sm.add_widget(Results())
 sm.add_widget(TargetAudience())
 sm.add_widget(Profile())
 
+
+
 class TestApp(App):
 
     def build(self):
@@ -317,10 +332,15 @@ class TestApp(App):
 
     def screen_switch_one(a,b):
         #check login previo
-        if(Login.just_logged(lg.get_connection())):
+        if(Login.just_logged(Login.get_connection())):
             sm.current = 'recents'
         else:
             sm.current = 'login'
+
+    @staticmethod
+    def exit():
+        Login.close_connection()
+        exit()
 
    
 

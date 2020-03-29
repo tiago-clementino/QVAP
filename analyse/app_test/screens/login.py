@@ -6,18 +6,26 @@ from pathlib import Path
 class Login(Screen):
 
     conn = None
+    email = None
 
     def build(self):
         super(Login, self)
 
-    def __init__(self):
+    def __init__(self, datapath = None):
         super(Login, self).__init__()
-        self.conn = Connection()
-        self.conn.create_connection()#Path("data/") / "database.db")
+        Login.conn = Login.get_connection(datapath)
+        #Login.conn = Connection()
+        #Login.conn.create_connection()#Path("data/") / "database.db")
+
+    @staticmethod
+    def new_connection(datapath = None):
+        Login.conn = Connection()
+        Login.conn.create_connection()#Path("data/") / "database.db")
 
     def check_login(self,login=None,password=None,msg=None):
         if login is not None and password is not None and login.text.strip() != '' and password.text.strip() != '':
-            if SqlUtils.check_login(self.conn,login.text,password.text,msg):
+            if SqlUtils.check_login(Login.get_connection(),login.text,password.text,msg):
+                Login.email=login.text
                 self.manager.transition.direction = 'left'
                 self.manager.current = 'recents'
             # else:
@@ -26,9 +34,28 @@ class Login(Screen):
             msg.text = 'Login inválido'
             #return 'Login inválido'
 
+    @staticmethod
     def just_logged(conn):
-        return SqlUtils.just_logged(conn)
+        login = SqlUtils.just_logged(conn)
+        Login.email=login
+        return login is not None
+
+    @staticmethod
+    def logoff(msg=None):
+        if SqlUtils.logoff(Login.get_connection(),Login.email,msg) > 0:
+            Login.email=None
+            return True
+        return False
         
-    def get_connection(self):
-        return self.conn
+    @staticmethod
+    def get_connection(datapath = None):
+        if(Login.conn == None or not Login.conn.connected()):
+            Login.new_connection(datapath)
+        return Login.conn
+
+    @staticmethod
+    def close_connection():
+        if(Login.conn != None and Login.conn.connected()):
+            Login.conn.close_connection()
+
         

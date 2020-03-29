@@ -66,7 +66,8 @@ class Connection:
                     cur.execute(sql)
                 else:
                     cur.execute(sql,values)
-                result = cur.commit()
+                self.conn.commit()
+                result = cur.lastrowid
                 cur.close
                 return result
             else:
