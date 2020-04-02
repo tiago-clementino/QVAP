@@ -74,6 +74,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
+from kivy.uix.actionbar import ActionBar
 
 import sys, os
 # print( os.environ["PATH"])
@@ -91,19 +92,98 @@ from screens.profile import Profile
 from screens.recents import Recents
 from screens.results import Results
 from screens.target_audience import TargetAudience
+from model.connect_json import Qvap
+from widgets.my_spinner import SpinnerWidget
+
+from kivy.factory import Factory
+from kivy.properties import ListProperty, ObjectProperty
+from kivy.uix.dropdown import DropDown
+from kivy.uix.button import Button
+
 
 def logoff():
     Login.logoff()
     exit()
+
+atributes=Qvap.get_atributes()#['Material','Cor','Superfície','Forma','Constituição']
+
+class MultiSelectSpinner(Button):
+    """Widget allowing to select multiple text options."""
+
+    dropdown = ObjectProperty(None, height = 40)
+    """(internal) DropDown used with MultiSelectSpinner."""
+
+    values = ListProperty([])
+    # """Values to choose from."""
+
+    selected_values = ListProperty([])
+    # """List of values selected by the user."""
+
+    def __init__(self, **kwargs):
+        self.bind(dropdown=self.update_dropdown)
+        self.bind(values=self.update_dropdown)
+        super(MultiSelectSpinner, self).__init__(**kwargs)
+        self.bind(on_release=self.toggle_dropdown)
+
+    def toggle_dropdown(self, *args):
+        self.values = atributes
+        if self.dropdown.parent:
+            self.dropdown.dismiss()
+        else:
+            self.dropdown.open(self)
+
+    def update_dropdown(self, *args):
+        if not self.dropdown:
+            self.dropdown = DropDown()
+        values = self.values
+        if values:
+            if self.dropdown.children:
+                self.dropdown.clear_widgets()
+            for value in values:
+                b = Factory.MultiSelectOption(text=value)
+                b.bind(state=self.select_value)
+                self.dropdown.add_widget(b)
+
+    def select_value(self, instance, value):
+        for v in self.selected_values:
+            self.selected_values.remove(v)
+        self.selected_values.append(instance.text)
+
+    def on_selected_values(self, instance, value):
+        if value:
+            self.text = ', '.join(value)
+        else:
+            self.text = ''
+
+    def on_selected_values(self, instance, value):
+        if value:
+            self.text = ', '.join(value)
+        else:
+            self.text = ''
+            
+
+
+
+
+
 
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
 Builder.load_string("""
 
+
+#: import utils kivy.utils
 <Splash>:
     name: 'splash'
     BoxLayout:
+        canvas.before:
+            Color:
+                rgb: utils.get_color_from_hex('#bdbfc1')
+            Rectangle:
+                # self here refers to the widget i.e FloatLayout
+                pos: self.pos
+                size: self.size
         pos_hint: {'top': 1}
         height: 44
         Image:
@@ -146,8 +226,28 @@ Builder.load_string("""
             text: ''
 <Recents>:
     name: 'recents'
+    
     BoxLayout:
         orientation: 'vertical'
+        ActionBar:
+            pos_hint: {'top':1}
+            ActionView:
+                use_separator: True
+                ActionPrevious:
+                    app_icon: ''
+                    title: 'Such Action'
+                    with_previous: False
+                ActionOverflow:
+                ActionButton:
+                    text: 'Btn2'
+                ActionButton:
+                    text: 'Btn3'
+                ActionGroup:
+                    text: 'Group1'
+                    ActionButton:
+                        text: 'Btn5'
+                    ActionButton:
+                        text: 'Btn6'
         Label:
             text: 'Consultas recentes'
         Button:
@@ -196,31 +296,199 @@ Builder.load_string("""
             text: 'sair'
             on_press: 
                 exit()
+                
+<MultiSelectOption@ToggleButton>:
+    size_hint: 1, None
+    height: '32dp'
+
+
 <New>:
     name: 'new'
-    BoxLayout:
+    
+    FloatLayout:
         orientation: 'vertical'
-        Label:
-            text: 'Nova consulta'
-        Button:
-            text: 'Consultar'
-            on_press: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'results'
-        Button:
-            text: 'Definir público alvo'
-            on_press: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'results'
-        Button:
-            text: 'Voltar'
-            on_press: 
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'recents'
-        Button:
-            text: 'sair'
-            on_press: 
-                exit()
+        canvas.before:
+            Color:
+                rgba: 0.95, 0.951, 0.95, 1
+            Rectangle:
+                # self here refers to the widget i.e FloatLayout
+                pos: self.pos
+                size: self.size
+        ActionBar:
+            pos_hint: {'top':1}
+            ActionView:
+                use_separator: True
+                ActionPrevious:
+                    app_icon: ''
+                    title: 'Nova consulta'
+                    with_previous: False
+                ActionOverflow:
+                    ActionButton:
+                        text: 'Voltar'
+                        on_press: 
+                            root.manager.transition.direction = 'right'
+                            root.manager.current = 'recents'
+                    ActionButton:
+                        text: 'Sair'
+                        on_press: 
+                            exit()
+
+                
+                ActionButton:
+                    text: 'Público'
+                    on_press: 
+                        root.manager.transition.direction = 'left'
+                        root.manager.current = 'results'
+
+        GridLayout:
+            cols: 1
+
+            orientation: 'vertical'
+            row_force_default: True 
+            row_default_height: 250
+            pos: 0, self.parent.height * 0.09 * -1
+            Image:
+                id: changing_image
+                size: 24, 24
+                source: 'images/png/0.png'
+            
+        GridLayout:
+            cols: 2
+            orientation: 'vertical'
+            row_force_default: True 
+            row_default_height: 100
+            pos: 0, self.parent.height * 0.5 * -1
+            padding: 10
+            spacing: 0
+            GridLayout:
+                cols: 1
+                orientation: 'vertical'
+                row_force_default: True 
+                row_default_height: 30
+                spacing: 10
+                
+                Label:
+                    #text: 'Atributos'    
+                    markup: True
+                    
+                    text: "[color=222222][b]Atributos[/b][/color]"   
+
+                    font_size: self.parent.width * 0.01 + 14
+                    
+                GridLayout:
+                    id: layout
+                    cols: 1
+                    orientation: 'vertical'
+                    row_force_default: True 
+                    row_default_height: 30
+                    padding: 0
+                    spacing: 2
+                    
+                    BoxLayout:
+
+                        padding: 5
+                        spacing: 5
+                        size: (42, 42)
+                        size_hint: (1, None)
+
+                        SpinnerWidget: 
+                            # Assigning id  
+                            id: fixo 
+                    
+                            # Callback  
+                            on_text: root.spinner_clicked(changing_image,home_scroll_grid, fixo, '[color=222222][b]Fixos[/b][/color]') 
+                    
+                            markup: True
+                            # initially text on spinner 
+                            text: "[color=222222][b]Fixos[/b][/color]"
+
+                            background_color: [2.8, 2.8, 2.8, 1]
+
+                            # total values on spinner 
+                            values: root.get_atributes()
+                    
+                            # declaring size of the spinner 
+                            # and the position of it 
+                            size_hint: 1, None
+                            size: self.parent.width, 32
+                            pos_hint:{'center_x':.5, 'top': 1} 
+                            
+                            text_size: self.size
+                            halign: 'center'
+                            valign: 'middle'
+
+
+    
+
+                    BoxLayout:
+
+                        padding: 5
+                        spacing: 5
+                        size: (42, 42)
+                        size_hint: (1, None)
+
+                        SpinnerWidget: 
+                            # Assigning id  
+                            id: indesejavel 
+                    
+                            # Callback  
+                            on_text: root.spinner_clicked(changing_image, home_scroll_grid, indesejavel, '[color=222222][b]Indesejáveis[/b][/color]') 
+                    
+                            markup: True
+                            # initially text on spinner 
+                            text: "[color=222222][b]Indesejáveis[/b][/color]"
+                            # initially text on spinner 
+                            # text: "Indesejáveis"
+
+                            background_color: [7, 2, 2, 1]
+                            # background_color: [1, 0.3, 0.3, 1]
+                    
+                            # total values on spinner 
+                            values: root.get_atributes()
+                    
+                            # declaring size of the spinner 
+                            # and the position of it 
+                            size_hint: 1, None
+                            size: self.parent.width, 32
+                            pos_hint:{'center_x':.5, 'top': 1} 
+                            
+                            text_size: self.size
+                            halign: 'center'
+                            valign: 'middle'
+
+                        
+                    
+                    
+            
+
+            ScrollView:
+
+
+                size_hint:(1, .8)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                do_scroll_x: False
+
+                GridLayout:
+                    id: home_scroll_grid
+                    cols: 2
+                    padding: 5
+                    spacing: 5
+                    height: self.minimum_height
+                    size_hint: (1, None)
+        GridLayout:
+            cols: 1
+            orientation: 'vertical'
+            row_force_default: True 
+            row_default_height: self.parent.height * 0.1
+            # pos: 100, self.parent.height - self.height - 100
+            pos: 0, self.parent.height * 0.9 * -1
+            spacing: 0
+            Button:
+                text: 'Consultar'
+                font_size: self.parent.width * 0.01 + 12
+                on_press: 
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = 'results'
 <Results>:
     name: 'results'
     BoxLayout:

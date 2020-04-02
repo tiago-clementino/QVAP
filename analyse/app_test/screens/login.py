@@ -25,7 +25,7 @@ class Login(Screen):
     def check_login(self,login=None,password=None,msg=None):
         if login is not None and password is not None and login.text.strip() != '' and password.text.strip() != '':
             if SqlUtils.check_login(Login.get_connection(),login.text,password.text,msg):
-                Login.email=login.text
+                Login.set_login(login.text)
                 self.manager.transition.direction = 'left'
                 self.manager.current = 'recents'
             # else:
@@ -37,8 +37,14 @@ class Login(Screen):
     @staticmethod
     def just_logged(conn):
         login = SqlUtils.just_logged(conn)
-        Login.email=login
+        Login.set_login(login)
         return login is not None
+
+    @staticmethod
+    def set_login(login):
+        if(login is not None and login != ''):
+            Login.email=login
+
 
     @staticmethod
     def logoff(msg=None):

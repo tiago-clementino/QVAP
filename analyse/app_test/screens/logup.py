@@ -13,6 +13,7 @@ class Logup(Screen):
     def record(self,email,password,confirm_password,msg=None):
         if self.check_email_format(email,msg) and self.check_password_format(password,confirm_password,msg):
             if SqlUtils.record(Login.get_connection(),email.text,password.text,msg):
+                Login.set_login(email.text)
                 self.manager.transition.direction = 'left'
                 self.manager.current = 'recents'
 

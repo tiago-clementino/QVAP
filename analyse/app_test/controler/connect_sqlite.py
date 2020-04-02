@@ -14,13 +14,13 @@ class Connection:
     def create_connection(self, path_name=None):
         """ create a database connection to a SQLite database """
         conn = None
-        print(path_name)
+        #print(path_name)
         try:
             if(path_name is None):
                 self.conn = sqlite3.connect(self.path_name.__str__())
             else:
                 self.conn = sqlite3.connect(path_name.__str__())
-            print(sqlite3.version)
+            #print(sqlite3.version)
         except Error as e:
             self.err = e
             print(e)

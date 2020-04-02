@@ -93,7 +93,6 @@ class SqlUtils:
         message = ''
         if(conn and conn.connected() and email is not None):
             result = conn.update("update profile set logged = 0 where email=?",(email,))
-            print(result,email,type(2))
             if(type(result) == type(2)):
                 
                 return result >= 0
