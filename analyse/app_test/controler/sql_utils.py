@@ -10,6 +10,7 @@ class SqlUtils:
             if(isinstance(rows, Iterable)):
                 for row in rows:
                     if row[0] == 1:
+                        result = conn.update('update profile set logged = 1, last_login = datetime(\'now\') where email = ?',(row[1],))
                         return row[1]
             else:
                 print(rows)
@@ -30,7 +31,8 @@ class SqlUtils:
                         print('Login ou senha inválidos para este usuário:',login)
                     return False
                 for row in rows:
-                    result = conn.update("update profile set logged = 1, last_login = datetime(now) where email = ?",(login,))
+                    result = conn.update('update profile set logged = 1, last_login = datetime(\'now\') where email = ?',(login,))
+               
                     return (row[0],row[1])
             else:
                 print(rows)

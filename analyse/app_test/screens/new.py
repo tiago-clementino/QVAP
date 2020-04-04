@@ -8,6 +8,7 @@ from kivy.uix.spinner import SpinnerOption
 from model.connect_json import Qvap
 from widgets.my_spinner import SpinnerWidget
 from widgets.my_spinner import SpinnerOptions
+from screens.login import Login
 
 class New(Screen):
 
@@ -19,6 +20,8 @@ class New(Screen):
 
     changing_image = None
 
+    results = None
+
     def __init__(self):
         
         super(New, self).__init__()   
@@ -27,6 +30,19 @@ class New(Screen):
         self.atribute_list_unwished = pd.DataFrame([],columns=['atributo','valor'])
         self.atribute_list_unwished.set_index('atributo',inplace=True)
     
+    @staticmethod
+    def set_current_results(results):
+
+        if(results is not None and len(results) > 0):
+            New.results = results
+
+    
+    @staticmethod
+    def get_current_results():
+        if(New.results is not None):
+            return New.results
+        return None
+
     def change_image(self):
         if(self.changing_image is not None):
             image_name = ''
@@ -43,7 +59,8 @@ class New(Screen):
                         current_atributes.append(Qvap.get_condictional_atribute_picture(v))
                         #current_variances.append(Qvap.get_condictional_variance_picture(v))
 
-            print(current_atributes)
+            #print(current_atributes)
+            #print(self.atribute_list_fixed.index)
             for v in atributes:
                 #if(v in self.atribute_list_fixed.index):
                 if(v in current_atributes):
@@ -57,8 +74,8 @@ class New(Screen):
                 elif(Qvap.is_mandatory_atribute_picture(v)):
                     image_name = f'{image_name}{Qvap.get_mandatory_atribute_picture(v)}'
 
-            print(image_name)
-            self.changing_image.source = f'images/png/{image_name}.png'
+            #print(image_name)
+            self.changing_image.source = Qvap.image_path(image_name)# f'images/png/{image_name}.png'
     
     def spinner_clicked(self, changing_image, grid, classname, default_text):
         self.changing_image = changing_image
@@ -66,6 +83,19 @@ class New(Screen):
     
     def get_atributes(self):
         return Qvap.get_atributes()
+
+    def query(self,msg=None):
+        #print(self.atribute_list_fixed)
+
+        if(msg is not None):
+            msg.text = New.format_message('Aguarde...')
+        results = Qvap.get_best_distinct_settings_2(self.atribute_list_fixed.index,self.atribute_list_fixed['valor'],self.atribute_list_unwished.index,self.atribute_list_unwished['valor'],None,msg)
+
+        New.set_current_results(results)
+        #print(results)
+
+        self.manager.transition.direction = 'left'
+        self.manager.current = 'results'
     
     def add_year(self, grid, classname, default_text):
         
@@ -78,8 +108,8 @@ class New(Screen):
         """ The values of this spinner are temporary, I don't know how to insert other child spinners inside
         I think I must replace the spinner by a Drop Down but I can't do it, I need some help"""
         background = self.background_color_fixed
-        print(my_text,self.atribute_list_unwished)
-        print(my_text,self.atribute_list_fixed)
+        #print(my_text,self.atribute_list_unwished)
+        #print(my_text,self.atribute_list_fixed)
         if(default_text.find('Indesejáveis')>= 0):
             background = self.background_color_unwished
             if my_text in self.atribute_list_unwished.index or my_text in self.atribute_list_fixed.index:
@@ -99,8 +129,10 @@ class New(Screen):
         if(atribute_variances is None):
             classname.text = default_text
             return
+            
         #left = Spinner(values = ["?", "??", "???"], text=classname.text, size = (32, 32), size_hint = (1, None))
         left = SpinnerWidget(values = atribute_variances, text=New.layout(my_text), markup=True, background_color=background, height = 32, size_hint = (1, None))
+        #text_size=[grid.size[0]*0.3,grid.size[1]], 
 
 
         aux = left.text
@@ -179,6 +211,8 @@ class New(Screen):
 
             args[1].text =  f'{args[0]}{New.layout(": ")}{args[2]}'
 
+            #diminui a fonte
+            args[1].font_size = args[1].parent.width * 0.02 + 8
 
             #if(aux is None):
             if(fixed):
@@ -203,6 +237,10 @@ class New(Screen):
         text = text.replace('[color=222222][b]','')
         text = text.replace('[/b][/color]','')
         return text
+
+    @staticmethod
+    def format_message(msg):
+        return f'"[color=222222][b][/b]{msg}[/color]"'
 
     # remove a school year from the home menu
     def del_year(self, grid, L, R, *args):
@@ -234,3 +272,12 @@ class New(Screen):
         # if(i is not None):
         #     atribute_list.remove(i)
         #print(atribute_list)
+    
+    def logoff(self,msg=None):
+        if Login.logoff(msg):
+            self.manager.transition.direction = 'right'
+            self.manager.current = 'login'
+
+    def clear_message(self, msg):
+        if(msg is not None):
+            msg.text = ''

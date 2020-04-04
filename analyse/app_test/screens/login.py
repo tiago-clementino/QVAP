@@ -52,6 +52,13 @@ class Login(Screen):
             Login.email=None
             return True
         return False
+
+
+    # @staticmethod
+    # def logoff(msg=None):
+    #     if Login.logoff_2(msg):
+    #         self.manager.transition.direction = 'right'
+    #         self.manager.current = 'login'
         
     @staticmethod
     def get_connection(datapath = None):

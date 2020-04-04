@@ -29,22 +29,29 @@ class SpinnerDropdown(DropDown):
         super(SpinnerDropdown, self).__init__(**kwargs)
         
         self.auto_width = True
+
+        
+
         #self.width = 150
 
 
 class SpinnerWidget(Spinner):
 
     def __init__(self, **kwargs):
-        super(SpinnerWidget, self).__init__(**kwargs)
-
-        self.dropdown_cls = SpinnerDropdown
-        
-        self.option_cls = SpinnerOptions
 
         self.auto_width = True
+
+        #diminui o quadro de texto
+        self.text_size = self.size
         
         self.halign = 'center'
         self.valign = 'middle'
+        super(SpinnerWidget, self).__init__(**kwargs)
+
+        self.dropdown_cls = SpinnerDropdown
+
+        
+        self.option_cls = SpinnerOptions
 
 
         
