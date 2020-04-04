@@ -58,10 +58,10 @@ class Qvap:
         name = ''
         right_atributes = Qvap.get_atributes()
         for v in right_atributes:
-            for x in Qvap.atribute_variances[v]:
-                for y in atribute_variances:
-                    if(y in x):
-                        name = f'{name}{Qvap.get_atribute_letter(y)}'
+            for xx in Qvap.atribute_variances[v]:
+                for yy in atribute_variances:
+                    if(yy in xx):
+                        name = f'{name}{Qvap.get_atribute_letter(yy)}'
     
         if(len(name) == 0):
             return 'XG'
@@ -160,7 +160,7 @@ class Qvap:
 
         #isto aqui ficou aloprado por conta do formato nada funcional do JSON
         #seleciona todas as URLs compatíveis com as restrições (right_packagings) nas tuplas do modelo (model)
-        right_model = model.loc[  [[any(z[v]==x for x in right_packagings['URL']) for v in z][0] for z in model['URL_most']]    ]
+        right_model = model.loc[  [[any(z[v]==xx for xx in right_packagings['URL']) for v in z][0] for z in model['URL_most']]    ]
 
         right_model.loc[:,'URL_most'] =  [[z[v] for v in z][0] for z in right_model['URL_most']]
         right_model.loc[:,'URL_less'] =  [[z[v] for v in z][0] for z in right_model['URL_less']]

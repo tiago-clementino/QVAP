@@ -137,26 +137,26 @@ class Results(Screen):
         else:
             sum_most = sum_less
 
-        for x in grid.children:
-            if(x.name == 'position'):
+        for xx in grid.children:
+            if(xx.name == 'position'):
                 #score = (', QVP = {:{width}.{prec}f}%'.format(v["score"]*100, width=3, prec=2)).replace('.',',')
-                x.text = Results.layout(f'[b]{i+1}º[/b]')
-            elif(x.name == 'score'):
-                x.text = Results.layout(('{:{width}.{prec}f}%'.format(v["score"]*100, width=3, prec=2)).replace('.',','))
-            elif(x.name in atributes_en):
-                x.text = Results.layout(f'{Qvap.translate_atributes_en(x.name)} = {v[x.name]}:')
-            elif(x.name.replace('_weight','') in atributes_en):
+                xx.text = Results.layout(f'[b]{i+1}º[/b]')
+            elif(xx.name == 'score'):
+                xx.text = Results.layout(('{:{width}.{prec}f}%'.format(v["score"]*100, width=3, prec=2)).replace('.',','))
+            elif(xx.name in atributes_en):
+                xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {v[xx.name]}:')
+            elif(xx.name.replace('_weight','') in atributes_en):
                 #with x.canvas:
                 #Color(rgba=self.pencolor)
                 #print(x.background)
                 #print(Color)
                 #x.background_color = Results.get_weight_color(v[x.name],sum_most,sum_less)
                 
-                x.background_color = Results.get_weight_color(v[x.name],sum_most,sum_less)
+                xx.background_color = Results.get_weight_color(v[xx.name],sum_most,sum_less)
                 #print(x.background_color)
                 #x.text = Results.layout('{:{width}.{prec}f}%'.format(v[x.name]*100, width=3, prec=2))
 
-    def mark_me(self, grid, scroll_grid, i, x, me, changing_image, *args):
+    def mark_me(self, grid, scroll_grid, i, xx, me, changing_image, *args):
         #print(grid.children, me)
 
         for v in scroll_grid.children:
@@ -165,7 +165,7 @@ class Results(Screen):
             else:
                 v.disabled = True
 
-        Results.select(changing_image,grid,i,x)
+        Results.select(changing_image,grid,i,xx)
     
     def logoff(self,msg=None):
         if Login.logoff(msg):

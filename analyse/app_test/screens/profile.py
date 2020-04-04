@@ -36,9 +36,9 @@ class Profile(Screen):
     def set_all(self, grid, msg):
         self.clear_message(msg)
         if(grid is not None):
-            for x in grid.children:
-                if(x.name == 'email'):
-                    x.text = Login.email
+            for xx in grid.children:
+                if(xx.name == 'email'):
+                    xx.text = Login.email
     
     def logoff(self,msg=None):
         if Login.logoff(msg):
