@@ -1,5 +1,5 @@
 
-import pandas as pd
+from pandas import DataFrame
 from kivy.uix.screenmanager import Screen
 from kivy.uix.spinner import Spinner
 from kivy.uix.button import Button
@@ -25,9 +25,9 @@ class New(Screen):
     def __init__(self):
         
         super(New, self).__init__()   
-        self.atribute_list_fixed = pd.DataFrame([],columns=['atributo','valor'])
+        self.atribute_list_fixed = DataFrame([],columns=['atributo','valor'])
         self.atribute_list_fixed.set_index('atributo',inplace=True)
-        self.atribute_list_unwished = pd.DataFrame([],columns=['atributo','valor'])
+        self.atribute_list_unwished = DataFrame([],columns=['atributo','valor'])
         self.atribute_list_unwished.set_index('atributo',inplace=True)
     
     @staticmethod
@@ -115,12 +115,12 @@ class New(Screen):
             if my_text in self.atribute_list_unwished.index or my_text in self.atribute_list_fixed.index:
                 classname.text = default_text
                 return
-            self.atribute_list_unwished=self.atribute_list_unwished.append(pd.DataFrame([''],index=[my_text],columns=self.atribute_list_unwished.columns))
+            self.atribute_list_unwished=self.atribute_list_unwished.append(DataFrame([''],index=[my_text],columns=self.atribute_list_unwished.columns))
         else:
             if my_text in self.atribute_list_fixed.index:
                 classname.text = default_text
                 return
-            self.atribute_list_fixed=self.atribute_list_fixed.append(pd.DataFrame([''],index=[my_text],columns=self.atribute_list_fixed.columns))
+            self.atribute_list_fixed=self.atribute_list_fixed.append(DataFrame([''],index=[my_text],columns=self.atribute_list_fixed.columns))
             
 
         
@@ -216,10 +216,10 @@ class New(Screen):
 
             #if(aux is None):
             if(fixed):
-                self.atribute_list_fixed=self.atribute_list_fixed.append(pd.DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_fixed.columns))
+                self.atribute_list_fixed=self.atribute_list_fixed.append(DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_fixed.columns))
             else:
                 
-                self.atribute_list_unwished=self.atribute_list_unwished.append(pd.DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_unwished.columns))
+                self.atribute_list_unwished=self.atribute_list_unwished.append(DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_unwished.columns))
 
 
 
