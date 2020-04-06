@@ -336,6 +336,7 @@ Builder.load_string("""
             text: "[color=222222][b][/b][/color]"
             height: 20
             background_color: 1, 1, 1, 1
+            font_size: self.parent.width * 0.02 + 12
 <Recents>:
     name: 'recents'
     on_enter: root.clear_message(msg)
@@ -397,6 +398,7 @@ Builder.load_string("""
             text: "[color=222222][b][/b][/color]"
             height: 20
             background_color: 1, 1, 1, 1
+            font_size: self.parent.width * 0.02 + 12
 <Profile>:
     name: 'profile'
     on_enter: root.set_all(main_grid,msg)
@@ -525,6 +527,7 @@ Builder.load_string("""
             text: "[color=222222][b][/b][/color]"
             height: 20
             background_color: 1, 1, 1, 1
+            font_size: self.parent.width * 0.02 + 12
                 
 <MultiSelectOption@ToggleButton>:
     size_hint: 1, None
@@ -764,6 +767,7 @@ Builder.load_string("""
             text: "[color=222222][b][/b][/color]"
             height: 20
             background_color: 1, 1, 1, 1
+            font_size: self.parent.width * 0.02 + 12
 
 
 <Results>:
@@ -1069,6 +1073,7 @@ Builder.load_string("""
                 text: "[color=222222][b][/b][/color]"
                 height: 20
                 background_color: 1, 1, 1, 1
+                font_size: self.parent.width * 0.02 + 12
 
 
 
@@ -1267,6 +1272,7 @@ Builder.load_string("""
             text: "[color=222222][b][/b][/color]"
             height: 20
             background_color: 1, 1, 1, 1
+            font_size: self.parent.width * 0.02 + 12
 """)
 
 # Declare both screens
