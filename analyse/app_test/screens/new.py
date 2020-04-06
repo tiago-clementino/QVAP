@@ -93,6 +93,7 @@ class New(Screen):
         if(msg is not None):
             msg.text = New.format_message('Aguarde...')
         #results = Qvap.get_best_distinct_settings_2(self.atribute_list_fixed.index,self.atribute_list_fixed['valor'],self.atribute_list_unwished.index,self.atribute_list_unwished['valor'],None,msg)
+        
         results = Qvap.get_best_distinct_settings_2(Login.get_connection(),self.atribute_list_fixed,self.atribute_list_unwished,msg)
 
         New.set_current_results(results)

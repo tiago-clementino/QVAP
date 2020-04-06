@@ -46,7 +46,7 @@ class SqlUtils:
                 sql = f'{sql_sufix} where {sql} order by score desc LIMIT 10'
             else:
                 sql = f'{sql_sufix} order by score desc LIMIT 10'
-            #print(sql)
+
             rows = conn.query(sql,tuple_)
             return rows
             

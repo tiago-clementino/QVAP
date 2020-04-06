@@ -208,7 +208,16 @@ class Qvap:
         # if(conn and conn.connected()):
             #packagings = Qvap.create_model_2(conn,model_path)
 
-        packagings = SqlUtils.create_model(conn,fixed_attributes, variable_attributes, msg=None)
+        fixed_attributes_en = dict()
+        variable_attributes_en = dict()
+
+        for i,v in fixed_attributes.items():
+            fixed_attributes_en[Qvap.translate_atributes(i)] = v
+
+        for i,v in variable_attributes.items():
+            variable_attributes_en[Qvap.translate_atributes(i)] = v
+
+        packagings = SqlUtils.create_model(conn,fixed_attributes_en, variable_attributes_en, msg=None)
 
         right_packagings = packagings
         
