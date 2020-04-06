@@ -208,7 +208,7 @@ class Qvap:
         # if(conn and conn.connected()):
             #packagings = Qvap.create_model_2(conn,model_path)
 
-        packagings = SqlUtils.create_model(conn,fixed_attributes, variable_attributes)
+        packagings = SqlUtils.create_model(conn,fixed_attributes, variable_attributes, msg=None)
 
         right_packagings = packagings
         

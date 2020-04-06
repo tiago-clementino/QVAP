@@ -20,7 +20,7 @@ class SqlUtils:
 
     
 
-    def create_model(conn,fixed_attributes, variable_attributes):
+    def create_model(conn,fixed_attributes, variable_attributes, msg=None):
         if(conn and conn.connected()):
                 
             sql_sufix = "select * from packaging"
