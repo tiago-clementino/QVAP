@@ -32,7 +32,8 @@ class Results(Screen):
 
         first = True
         #for i,v in results.iterrows():
-        for i in range(len(results['score_sort'])):
+        #for i in range(len(results['score_sort'])):
+        for i,v in enumerate(results):
 
             my_text = f'{i+1}º'
 
@@ -50,7 +51,9 @@ class Results(Screen):
             #right.bind(on_press=partial(self.mark_me, grid, scroll_grid, i, v, right, changing_image))
             right.bind(on_press=partial(self.mark_me, grid, scroll_grid, i, right, changing_image))
 
-            icon = Image(source =Qvap.get_image_name([results['material'][results['score_sort'][i]],results['shape'][results['score_sort'][i]],results['color'][results['score_sort'][i]],results['surface'][results['score_sort'][i]],results['constitution'][results['score_sort'][i]]]),size_hint_x=0.3, size=(60,60))
+            #icon = Image(source =Qvap.get_image_name([results['material'][results['score_sort'][i]],results['shape'][results['score_sort'][i]],results['color'][results['score_sort'][i]],results['surface'][results['score_sort'][i]],results['constitution'][results['score_sort'][i]]]),size_hint_x=0.3, size=(60,60))
+
+            icon = Image(source =Qvap.get_image_name([results[i][Qvap.get_atribute_order('material')],results[i][Qvap.get_atribute_order('shape')],results[i][Qvap.get_atribute_order('color')],results[i][Qvap.get_atribute_order('surface')],results[i][Qvap.get_atribute_order('constitution')]]),size_hint_x=0.3, size=(60,60))
             #right.add_widget(icon)
 
             if(first):
@@ -114,7 +117,8 @@ class Results(Screen):
     def select(changing_image,grid,i):
         results = New.get_current_results()
         #changing_image.source = Qvap.get_image_name([v['material'],v['shape'],v['color'],v['surface'],v['constitution']])
-        changing_image.source = Qvap.get_image_name([results['material'][results['score_sort'][i]],results['shape'][results['score_sort'][i]],results['color'][results['score_sort'][i]],results['surface'][results['score_sort'][i]],results['constitution'][results['score_sort'][i]]])
+        # changing_image.source = Qvap.get_image_name([results['material'][results['score_sort'][i]],results['shape'][results['score_sort'][i]],results['color'][results['score_sort'][i]],results['surface'][results['score_sort'][i]],results['constitution'][results['score_sort'][i]]])
+        changing_image.source = Qvap.get_image_name([results[i][2],results[i][4],results[i][6],results[i][10],results[i][8]])
         #print(v)
         atributes_en = Qvap.get_atributes_en()
 
@@ -122,20 +126,26 @@ class Results(Screen):
         sum_less = 0
         
         #for c in v.index:
-        for c in results.keys():
+        #for c in results.keys():
+        for c in [3,5,7,9,11]:
             
-            if(c.find('_weight') >= 0):
-                #if(v[c] > 0):
-                if(results[c][results['score_sort'][i]] > 0):
-                    #if(sum_most < v[c]):
-                    if(sum_most < results[c][results['score_sort'][i]]):
-                        #sum_most = v[c]
-                        sum_most = results[c][results['score_sort'][i]]
-                else:
-                    #if(sum_less > v[c]):
-                    if(sum_less > results[c][results['score_sort'][i]]):
-                        #sum_less = v[c]
-                        sum_less = results[c][results['score_sort'][i]]
+            #if(c.find('_weight') >= 0):
+            #if(v[c] > 0):
+            #if(results[c][results['score_sort'][i]] > 0):
+            if(results[i][c] > 0):
+                #if(sum_most < v[c]):
+                # if(sum_most < results[c][results['score_sort'][i]]):
+                if(sum_most < results[i][c]):
+                    #sum_most = v[c]
+                    # sum_most = results[c][results['score_sort'][i]]
+                    sum_most = results[i][c]
+            else:
+                #if(sum_less > v[c]):
+                # if(sum_less > results[c][results['score_sort'][i]]):
+                if(sum_less > results[i][c]):
+                    #sum_less = v[c]
+                    # sum_less = results[c][results['score_sort'][i]]
+                    sum_less = results[i][c]
                         
         if(sum_less < 0):
             sum_less = -1 * sum_less
@@ -154,10 +164,12 @@ class Results(Screen):
                 xx.text = Results.layout(f'[b]{i+1}º[/b]')
             elif(xx.name == 'score'):
                 #xx.text = Results.layout(('{:{width}.{prec}f}%'.format(v["score"]*100, width=3, prec=2)).replace('.',','))
-                xx.text = Results.layout(('{:{width}.{prec}f}%'.format(results["score"][results['score_sort'][i]]*100, width=3, prec=2)).replace('.',','))
+                #xx.text = Results.layout(('{:{width}.{prec}f}%'.format(results["score"][results['score_sort'][i]]*100, width=3, prec=2)).replace('.',','))
+                xx.text = Results.layout(('{:{width}.{prec}f}%'.format(results[i][1]*100, width=3, prec=2)).replace('.',','))
             elif(xx.name in atributes_en):
                 #xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {v[xx.name]}:')
-                xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {results[xx.name][results["score_sort"][i]]}:')
+                # xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {results[xx.name][results["score_sort"][i]]}:')
+                xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {results[i][Qvap.get_atribute_order(xx.name)]}:')
             elif(xx.name.replace('_weight','') in atributes_en):
                 #with x.canvas:
                 #Color(rgba=self.pencolor)
@@ -166,7 +178,9 @@ class Results(Screen):
                 #x.background_color = Results.get_weight_color(v[x.name],sum_most,sum_less)
                 
                 #xx.background_color = Results.get_weight_color(v[xx.name],sum_most,sum_less)
-                xx.background_color = Results.get_weight_color(results[xx.name][results['score_sort'][i]],sum_most,sum_less)
+                #xx.background_color = Results.get_weight_color(results[xx.name][results['score_sort'][i]],sum_most,sum_less)
+
+                xx.background_color = Results.get_weight_color(results[i][Qvap.get_atribute_order(xx.name.replace('_weight',''))+1],sum_most,sum_less)
                 #print(x.background_color)
                 #x.text = Results.layout('{:{width}.{prec}f}%'.format(v[x.name]*100, width=3, prec=2))
 

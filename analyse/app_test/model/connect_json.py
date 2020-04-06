@@ -5,6 +5,9 @@ from pathlib import Path
 from json import loads
 from zipfile import ZipFile
 
+from controler.connect_sqlite import Connection
+from controler.sql_utils import SqlUtils
+
 class Qvap:
 
     male_age_1 = 0
@@ -36,6 +39,12 @@ class Qvap:
     @staticmethod
     def get_atributes():
         return Qvap.atributes
+
+    @staticmethod
+    def get_atribute_order(atribute):
+        for i,v in enumerate(Qvap.get_atributes_en()):
+            if(atribute == v):
+                return 2+i*2
 
     @staticmethod
     def get_atributes_en():
@@ -190,41 +199,49 @@ class Qvap:
         return right_packagings
 
     @staticmethod
-    def get_matched_packaging_3(fixed_attributes, fixes, variable_attributes, variances, model_path=None):
+    #def get_matched_packaging_3(conn,fixed_attributes, fixes, variable_attributes, variances, model_path=None):
+    def get_matched_packaging_3(conn,fixed_attributes, variable_attributes, msg=None):
         '''retorna as embalagens isoladas
             fixed_attributes: atributos em si
             fixes: variações de atributos
         '''
-        packagings = Qvap.create_model_2(model_path)
-        #print(packagings)
+        # if(conn and conn.connected()):
+            #packagings = Qvap.create_model_2(conn,model_path)
+
+        packagings = SqlUtils.create_model(conn,fixed_attributes, variable_attributes)
+
         right_packagings = packagings
-        if(fixed_attributes is not None):
-            #for i in range(len(fixed_attributes)):
-            for i in fixed_attributes:
-                for j,v in packagings[Qvap.translate_atributes(i)].items():
+        
+        # if(fixed_attributes is not None):
+        #     #for i in range(len(fixed_attributes)):
+        #     for i in fixed_attributes:
+        #         for j,v in packagings[Qvap.translate_atributes(i)].items():
                     
-                    #if(v not in fixes[i]):
-                    if(v not in fixes):
-                        try:
-                            del right_packagings['score'][j]
-                        except KeyError:
-                            print(j)
-                            print(right_packagings['score'])
-                            print(f'Chave {j} inacessível entre as embalagens')
-                #right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(fixed_attributes[i])] == fixes[i]]
-        if(variable_attributes is not None):
-            #for j in range(len(variable_attributes)):
-            for j in variable_attributes:
-                for i,v in packagings[Qvap.translate_atributes(j)].items():
-                    #if(v not in variances[j]):
-                    if(v not in variances):
-                        try:
-                            del right_packagings['score'][i]
-                        except KeyError:
-                            print(f'Chave {i} inacessível entre as embalagens')
-                #right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(variable_attributes[j])] != variances[j]]
+        #             #if(v not in fixes[i]):
+        #             if(v not in fixes):
+        #                 try:
+        #                     del right_packagings['score'][j]
+        #                 except KeyError:
+        #                     print(j)
+        #                     print(right_packagings['score'])
+        #                     print(f'Chave {j} inacessível entre as embalagens')
+        #         #right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(fixed_attributes[i])] == fixes[i]]
+        # if(variable_attributes is not None):
+        #     #for j in range(len(variable_attributes)):
+        #     for j in variable_attributes:
+        #         for i,v in packagings[Qvap.translate_atributes(j)].items():
+        #             #if(v not in variances[j]):
+        #             if(v not in variances):
+        #                 try:
+        #                     del right_packagings['score'][i]
+        #                 except KeyError:
+        #                     print(f'Chave {i} inacessível entre as embalagens')
+        #         #right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(variable_attributes[j])] != variances[j]]
+
+
 
         return right_packagings
+        #return None
 
     @staticmethod
     def my_json_load(file_name):
@@ -238,9 +255,18 @@ class Qvap:
         return d
 
 
+    @staticmethod
+    def create_packagings(packagings):
+
+        conn = Connection()
+        conn.create_connection()#Path("data/") / "database.db")
+
+        
+        SqlUtils.create_packagings(conn,packagings)
+
 
     @staticmethod
-    def get_best_distinct_settings_2(fixed_attributes, fixes, variable_attributes, variances, model_path=None, msg=None):
+    def get_best_distinct_settings_2(conn,fixed_attributes, variable_attributes, msg=None):
 
         #listas
         #packagins devem ter as pontuações para cada embalagem e  médias de influência por atributo
@@ -248,7 +274,10 @@ class Qvap:
         #packagings, matches = Qvap.get_matched_packaging_2(fixed_attributes, fixes, model_path)
         #packagings = Qvap.get_matched_packaging_2(fixed_attributes, fixes, model_path)
         
-        packagings = Qvap.get_matched_packaging_3(fixed_attributes, fixes, variable_attributes, variances, model_path)
+        packagings = Qvap.get_matched_packaging_3(conn,fixed_attributes, variable_attributes, msg)
+
+        #print(Qvap.create_packagings(packagings))
+        
 
         # packagings.reset_index(drop=True,inplace=True)
 
@@ -267,14 +296,14 @@ class Qvap:
         #                 packagings.loc[j] = packagings.loc[j+1]
         #                 packagings.loc[j+1] = temp
         
-        # print(4)
-        sorted_ = sorted(packagings['score'].items(), key = lambda kv: (kv[1],kv[0]), reverse=True)
-        sorted_2 = dict()
-        count = 0
-        for v in sorted_:
-            sorted_2[count] = v[0]
-            count = count + 1
-        packagings['score_sort'] = sorted_2
+        #print(packagings)
+        # sorted_ = sorted(packagings['score'].items(), key = lambda kv: (kv[1],kv[0]), reverse=True)
+        # sorted_2 = dict()
+        # count = 0
+        # for v in sorted_:
+        #     sorted_2[count] = v[0]
+        #     count = count + 1
+        # packagings['score_sort'] = sorted_2
         
         #return packagings.sort_values(by=['score'], ascending=False)[:10].reset_index()#10 deve ser flexível e constar em settigns (base de dados)
         return packagings

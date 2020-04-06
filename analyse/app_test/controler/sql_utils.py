@@ -18,6 +18,40 @@ class SqlUtils:
         print('não conectado')
         return None
 
+    
+
+    def create_model(conn,fixed_attributes, variable_attributes):
+        if(conn and conn.connected()):
+                
+            sql_sufix = "select * from packaging"
+            sql = ""
+            tuple_ = []#tuple()
+            if(fixed_attributes is not None):
+                
+                for i,v in fixed_attributes.items():
+                    if(sql != ''):
+                        sql = f'{sql} and '
+                    sql = f'{sql}{i} = ?'
+                    tuple_.append(v)
+                    
+            if(variable_attributes is not None):
+                
+                for i,v in variable_attributes.items():
+                    if(sql != ''):
+                        sql = f'{sql} and '
+                    sql = f'{sql}{i} <> ?'
+                    tuple_.append(v)
+
+            if(sql != ''):
+                sql = f'{sql_sufix} where {sql} order by score desc LIMIT 10'
+            else:
+                sql = f'{sql_sufix} order by score desc LIMIT 10'
+            #print(sql)
+            rows = conn.query(sql,tuple_)
+            return rows
+            
+        return None
+
     def check_login(conn,login,password,msg=None):
         if(conn and conn.connected()):
             rows = conn.query("select * from profile where email = ? and password = ?",(login,password))
@@ -48,6 +82,31 @@ class SqlUtils:
 
 
     
+
+    
+
+    def create_packagings(conn,packagings):
+        if packagings is not None:
+            if(conn and conn.connected()):
+                result = dict()
+                for i,v in packagings['URL'].items():
+                    URL = v
+                    score = packagings['score'][i]
+                    material = packagings['material'][i]
+                    material_weight = packagings['material_weight'][i]
+                    shape = packagings['shape'][i]
+                    shape_weight = packagings['shape_weight'][i]
+                    color = packagings['color'][i]
+                    color_weight = packagings['color_weight'][i]
+                    constitution = packagings['constitution'][i]
+                    constitution_weight = packagings['constitution_weight'][i]
+                    surface = packagings['surface'][i]
+                    surface_weight = packagings['surface_weight'][i]
+
+                    result[i] = conn.update("insert into packaging(URL,score,material,material_weight,shape,shape_weight,color,color_weight,constitution,constitution_weight,surface,surface_weight) values (?,?,?,?,?,?,?,?,?,?,?,?)",(URL,score,material,material_weight,shape,shape_weight,color,color_weight,constitution,constitution_weight,surface,surface_weight))
+                return result
+        return None
+
 
 
     
