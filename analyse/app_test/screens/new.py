@@ -286,6 +286,7 @@ class New(Screen):
 
         grid.remove_widget(L)
         grid.remove_widget(R)
+        
         for i,v in atribute_list.items():
             if(i == texts[0]):
                 if(fixed):
@@ -294,16 +295,15 @@ class New(Screen):
                         del self.atribute_list_fixed[i]
                     except KeyError:
                         print(f'Chave {i} inacessível')
-                    return
+                    #return
                 else:
                     #self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
                     try:
                         del self.atribute_list_unwished[i]
                     except KeyError:
                         print(f'Chave {i} inacessível')
-                    return
+                    #return
                 break
-
 
         if(self.changing_image is not None):
             self.change_image()
