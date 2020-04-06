@@ -8,7 +8,10 @@ class SpinnerOptions(SpinnerOption):
         super(SpinnerOptions, self).__init__(**kwargs)
         self.background_normal = ''
         self.background_color = [0.9, 0.9, 0.9, 1]#[0.5, 0.5, 0.55, 1]    # blue colour
-        self.height = 32
+        # self.height = 32
+
+        
+
         self.markup = True
         self.text = SpinnerOptions.format(self.text)
         
@@ -52,6 +55,8 @@ class SpinnerWidget(Spinner):
 
         
         self.option_cls = SpinnerOptions
+
+        self.option_cls.font_size = (self.width * 0.1 + 12)
 
 
         

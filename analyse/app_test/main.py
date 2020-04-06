@@ -217,10 +217,12 @@ Builder.load_string("""
         Image:
             size: 200, 200
             size_hint_y: None
-            pos: 0, self.parent.height - 230
+            pos: 0, self.parent.height - bar_.height * 4.8
+            # pos: 0, self.parent.height - 230
             source: 'images/splash.gif'
 
         ActionBar:
+            id: bar_
             pos_hint: {'top':1}
             ActionView:
                 use_separator: True
@@ -237,7 +239,8 @@ Builder.load_string("""
             cols: 1
             orientation: 'vertical'
             size_hint_y: None
-            pos: 0, self.parent.height - 315
+            pos: 0, self.parent.height - bar_.height * 6.6
+            # pos: 0, self.parent.height - 315
             row_force_default: True 
             row_default_height: self.parent.height
 
@@ -347,9 +350,10 @@ Builder.load_string("""
         Image:
             size: 200, 200
             size_hint_y: None
-            pos: 0, self.parent.height - 230
+            pos: 0, self.parent.height - bar_.height * 4.8 # * 0.37
             source: 'images/splash.gif'
         ActionBar:
+            id: bar_
             pos_hint: {'top':1}
             ActionView:
                 use_separator: True
@@ -407,10 +411,12 @@ Builder.load_string("""
         Image:
             size: 200, 200
             size_hint_y: None
-            pos: 0, self.parent.height - 230
+            pos: 0, self.parent.height - bar_.height * 4.8
+            # pos: 0, self.parent.height - 230
             source: 'images/splash.gif'
 
         ActionBar:
+            id: bar_
             pos_hint: {'top':1}
             ActionView:
                 use_separator: True
@@ -449,7 +455,8 @@ Builder.load_string("""
             cols: 1
             orientation: 'vertical'
             size_hint_y: None
-            pos: 0, self.parent.height - 315
+            pos: 0, self.parent.height - bar_.height * 6.6
+            # pos: 0, self.parent.height - 315
             row_force_default: True 
             row_default_height: self.parent.height
 
@@ -537,6 +544,7 @@ Builder.load_string("""
                 pos: self.pos
                 size: self.size
         ActionBar:
+            id: bar_
             pos_hint: {'top':1}
             ActionView:
                 use_separator: True
@@ -581,7 +589,8 @@ Builder.load_string("""
             row_force_default: True 
             row_default_height: self.parent.height * 0.4
             #pos: 0, self.parent.height * 0.09 * -1
-            pos: 0, -55
+            pos: 0, -bar_.height * 1.3
+            #pos: 0, -55
             Image:
                 id: changing_image
                 size: 24, self.parent.height
@@ -603,15 +612,16 @@ Builder.load_string("""
                     size: self.size
 
 
-            pos: 0, self.parent.height * 0.53 * -1
-            padding: 10
+            #pos: 0, self.parent.height * 0.53 * -1
+            pos: 0, -bar_.height * 1.3 - changing_image.height
+            padding: 3
             spacing: 0
             GridLayout:
                 cols: 1
                 orientation: 'vertical'
                 row_force_default: True 
                 row_default_height: 30
-                spacing: 10
+                spacing: 0
                 
                 Label:
                     #text: 'Atributos'    
@@ -619,23 +629,23 @@ Builder.load_string("""
                     
                     text: "[color=222222][b]Atributos[/b][/color]"   
 
-                    font_size: self.parent.width * 0.01 + 14
+                    font_size: self.parent.width * 0.02 + 14
                     
                 GridLayout:
                     id: layout
                     cols: 1
                     orientation: 'vertical'
                     row_force_default: True 
-                    row_default_height: 30
+                    row_default_height: self.parent.height * 0.3 # 30
                     padding: 0
-                    spacing: 2
+                    spacing: 0
                     
                     BoxLayout:
 
-                        padding: 5
-                        spacing: 5
-                        size: (42, 42)
-                        size_hint: (1, None)
+                        padding: 0
+                        spacing: 0
+                        #size: (42, 42)
+                        #size_hint: (1, None)
 
                         SpinnerWidget: 
                             # Assigning id  
@@ -656,9 +666,10 @@ Builder.load_string("""
                             # declaring size of the spinner 
                             # and the position of it 
                             size_hint: 1, None
-                            size: self.parent.width, 32
+                            size: self.parent.width, self.parent.height
                             pos_hint:{'center_x':.5, 'top': 1} 
                             
+                            font_size: self.parent.width * 0.02 + 14
                             text_size: self.size
                             halign: 'center'
                             valign: 'middle'
@@ -668,10 +679,10 @@ Builder.load_string("""
 
                     BoxLayout:
 
-                        padding: 5
-                        spacing: 5
-                        size: (42, 42)
-                        size_hint: (1, None)
+                        padding: 0
+                        spacing: 0
+                        #size: (42, 42)
+                        #size_hint: (1, None)
 
                         SpinnerWidget: 
                             # Assigning id  
@@ -695,9 +706,10 @@ Builder.load_string("""
                             # declaring size of the spinner 
                             # and the position of it 
                             size_hint: 1, None
-                            size: self.parent.width, 32
+                            size: self.parent.width, self.parent.height
                             pos_hint:{'center_x':.5, 'top': 1} 
                             
+                            font_size: self.parent.width * 0.02 + 14
                             text_size: self.size
                             halign: 'center'
                             valign: 'middle'
@@ -717,11 +729,17 @@ Builder.load_string("""
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 do_scroll_x: False
                 #height: self.parent.height
+
+
+
                 GridLayout:
                     id: home_scroll_grid
                     cols: 2
                     padding: 5
                     spacing: 5
+                    
+                    #row_default_height: self.parent.height * 0.2 # 30
+
                     height: self.minimum_height
                     size_hint: (1, None)
         GridLayout:
@@ -734,7 +752,7 @@ Builder.load_string("""
             spacing: 0
             Button:
                 text: 'Consultar'
-                font_size: self.parent.width * 0.01 + 12
+                font_size: self.parent.width * 0.02 + 12
                 on_press: 
                     root.query(msg)
         BackgroundLabel:
@@ -761,6 +779,7 @@ Builder.load_string("""
                 pos: self.pos
                 size: self.size
         ActionBar:
+            id: bar_
             pos_hint: {'top':1}
             ActionView:
                 use_separator: True
@@ -799,11 +818,13 @@ Builder.load_string("""
                 #         root.manager.current = 'profile'
 
         GridLayout:
+            id: results_
             cols: 1
             orientation: 'vertical'
             row_force_default: True 
-            row_default_height: 230
-            pos: 0, self.parent.height * 0.09 * -1
+            row_default_height: self.parent.height * 0.3 - bar_.height * 1.3 # 230
+            #pos: 0, self.parent.height * 0.09 * -1
+            pos: 0, -bar_.height * 1.3
             spacing: 10
             GridLayout:
                 cols: 2
@@ -816,6 +837,7 @@ Builder.load_string("""
                     id: changing_image_2
                     size: 17, 17
                     source: 'images/png/XG.gif'
+                    # size_hint: (1, 1)
                 GridLayout:
                     cols: 2
                     id: home_grid
@@ -970,7 +992,23 @@ Builder.load_string("""
                         valign: 'middle'
                         background_color: 1, 0.951, 0.95, 1
                 
-        
+        GridLayout:
+            cols: 1
+            orientation: 'vertical'
+            row_force_default: True 
+            row_default_height: self.parent.height * 0.6 - bar_.height * 3.3
+            size: self.parent.width, self.parent.height
+            canvas.before:
+                Color:
+                    rgba: 0.95, 0.951, 0.95, 1
+                Rectangle:
+                    # self here refers to the widget i.e FloatLayout
+                    pos: self.pos
+                    size: self.size
+
+            pos: 0, -bar_.height * 3 - self.parent.height * 0.3
+            padding: 3
+            spacing: 0
 
             ScrollView:
 
@@ -978,6 +1016,8 @@ Builder.load_string("""
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 do_scroll_x: False
                 auto_width: True
+                
+                pos: 0, -bar_.height * 1.3 - results_.height * 1.3 - 1000
                 GridLayout:
                     id: home_scroll_grid_2
                     cols: 2
@@ -1082,10 +1122,12 @@ Builder.load_string("""
         Image:
             size: 200, 200
             size_hint_y: None
-            pos: 0, self.parent.height - 230
+            pos: 0, self.parent.height - bar_.height * 4.8
+            #pos: 0, self.parent.height - 230
             source: 'images/splash.gif'
 
         ActionBar:
+            id: bar_
             pos_hint: {'top':1}
             ActionView:
                 use_separator: True
@@ -1102,7 +1144,8 @@ Builder.load_string("""
             cols: 1
             orientation: 'vertical'
             size_hint_y: None
-            pos: 0, self.parent.height - 315
+            pos: 0, self.parent.height - bar_.height * 6.6
+            # pos: 0, self.parent.height - 315
             row_force_default: True 
             row_default_height: self.parent.height
 
@@ -1235,7 +1278,7 @@ Builder.load_string("""
 # Create the screen manager
 sm = ScreenManager()
 lg = Login()
-sm.add_widget(Splash())
+# sm.add_widget(Splash())
 sm.add_widget(lg)
 sm.add_widget(Logup())
 sm.add_widget(Recents())
@@ -1249,8 +1292,16 @@ sm.add_widget(Profile.get_instance())
 class TestApp(App):
 
     def build(self):
-        Clock.schedule_once(self.screen_switch_one, 3)
+        #Clock.schedule_once(self.screen_switch_one, 3)
+        self.screen_switch_two()
         return sm
+
+    def screen_switch_two(self):
+        #check login previo
+        if(Login.just_logged(Login.get_connection())):
+            sm.current = 'recents'
+        else:
+            sm.current = 'login'
 
     def screen_switch_one(a,b):
         #check login previo

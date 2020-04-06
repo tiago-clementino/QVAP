@@ -141,14 +141,14 @@ class New(Screen):
             return
             
         #left = Spinner(values = ["?", "??", "???"], text=classname.text, size = (32, 32), size_hint = (1, None))
-        left = SpinnerWidget(values = atribute_variances, text=New.layout(my_text), markup=True, background_color=background, height = 32, size_hint = (1, None))
+        left = SpinnerWidget(values = atribute_variances, text=New.layout(my_text), markup=True, font_size = grid.width * 0.02 + 14, background_color=background, text_size = (grid.width,grid.parent.height * 0.3), height = grid.parent.height * 0.3, size_hint = (1, None))
         #text_size=[grid.size[0]*0.3,grid.size[1]], 
-
+        #left.font_size = grid.width * 0.02 + 14
 
         aux = left.text
 
         # the delete button of this year
-        right = Button(background_color = (2,0,0,1), text="X", size = (32, 32), size_hint = (None, None))
+        right = Button(background_color = (2,0,0,1), text="X", size = (grid.parent.height * 0.3, grid.parent.height * 0.3), size_hint = (None, None))
         
         left.bind(text=partial(self.set_atribute_variance, grid, left, right, aux) )#lambda *args: self.set_atribute_variance(aux, args))
 
@@ -159,6 +159,7 @@ class New(Screen):
         grid.add_widget(left)
         grid.add_widget(right)
         # clear bottom's TextInput
+
 
         classname.text = default_text
 
@@ -239,7 +240,7 @@ class New(Screen):
             args[1].text =  f'{args[0]}{New.layout(": ")}{args[2]}'
 
             #diminui a fonte
-            args[1].font_size = args[1].parent.width * 0.02 + 8
+            args[1].font_size = args[1].parent.width * 0.02 + 14
 
             #if(aux is None):
             if(fixed):
