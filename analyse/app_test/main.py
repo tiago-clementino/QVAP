@@ -359,7 +359,7 @@ Builder.load_string("""
                 use_separator: True
                 ActionPrevious:
                     app_icon: ''
-                    title: 'Recentes'
+                    title: 'Instruções'
                     with_previous: False
                 ActionOverflow:
                 ActionButton:
@@ -433,7 +433,7 @@ Builder.load_string("""
                 ActionGroup:
                     text: 'Mais'
                     ActionButton:
-                        text: 'Recentes'
+                        text: 'Instruções'
                         # text_size: self.size
                         halign: 'center'
                         valign: 'middle'
@@ -554,7 +554,7 @@ Builder.load_string("""
                     with_previous: False
                 ActionOverflow:
                 ActionButton:
-                    text: 'Recentes'
+                    text: 'Instruções'
                     on_press: 
                         root.manager.transition.direction = 'right'
                         root.manager.current = 'recents'
@@ -789,7 +789,7 @@ Builder.load_string("""
                     with_previous: False
                 ActionOverflow:
                 ActionButton:
-                    text: 'Recentes'
+                    text: 'Instruções'
                     on_press: 
                         root.manager.transition.direction = 'right'
                         root.manager.current = 'recents'
@@ -822,7 +822,7 @@ Builder.load_string("""
             cols: 1
             orientation: 'vertical'
             row_force_default: True 
-            row_default_height: self.parent.height * 0.3 - bar_.height * 1.3 # 230
+            row_default_height: self.parent.height * 0.45 - bar_.height * 1.3 # 230
             #pos: 0, self.parent.height * 0.09 * -1
             pos: 0, -bar_.height * 1.3
             spacing: 10
@@ -830,7 +830,7 @@ Builder.load_string("""
                 cols: 2
                 orientation: 'vertical'
                 row_force_default: True 
-                row_default_height: 230
+                row_default_height: self.height
                 padding: 10
                 spacing: 10
                 Image:
@@ -1006,7 +1006,7 @@ Builder.load_string("""
                     pos: self.pos
                     size: self.size
 
-            pos: 0, -bar_.height * 3 - self.parent.height * 0.3
+            pos: 0, -bar_.height * 1.3 - self.parent.height * 0.45
             padding: 3
             spacing: 0
 
@@ -1029,7 +1029,7 @@ Builder.load_string("""
 
 
         GridLayout:
-            cols: 2
+            cols: 1
             orientation: 'vertical'
             row_force_default: True 
             row_default_height: self.parent.height * 0.1
@@ -1042,13 +1042,13 @@ Builder.load_string("""
                 on_press: 
                     root.manager.transition.direction = 'right'
                     root.manager.current = 'new'
-            Button:
-                text: 'Salvar'
-                font_size: self.parent.width * 0.01 + 12
-                background_color: 1.2, 2, 1.2, 1
-                on_press: 
-                    root.manager.transition.direction = 'right'
-                    root.manager.current = 'recents'
+            # Button:
+            #     text: 'Salvar'
+            #     font_size: self.parent.width * 0.01 + 12
+            #     background_color: 1.2, 2, 1.2, 1
+            #     on_press: 
+            #         root.manager.transition.direction = 'right'
+            #         root.manager.current = 'recents'
         GridLayout:
             cols: 1
             orientation: 'vertical'
