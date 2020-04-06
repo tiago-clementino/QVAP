@@ -141,7 +141,7 @@ class New(Screen):
             return
             
         #left = Spinner(values = ["?", "??", "???"], text=classname.text, size = (32, 32), size_hint = (1, None))
-        left = SpinnerWidget(values = atribute_variances, text=New.layout(my_text), markup=True, font_size = grid.width * 0.02 + 14, background_color=background, text_size = (grid.width,grid.parent.height * 0.3), height = grid.parent.height * 0.3, size_hint = (1, None))
+        left = SpinnerWidget(values = atribute_variances, text=New.layout(my_text), markup=True, font_size = grid.width * 0.02 + 14, background_color=background, text_size = (grid.width * 0.6,grid.parent.height * 0.3), height = grid.parent.height * 0.3, size_hint = (1, None))
         #text_size=[grid.size[0]*0.3,grid.size[1]], 
         #left.font_size = grid.width * 0.02 + 14
 

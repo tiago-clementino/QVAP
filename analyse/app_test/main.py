@@ -70,6 +70,7 @@ if __name__ == "__main__":
     app = MainApp()
     app.run() """
 
+from pathlib import Path
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -550,7 +551,7 @@ Builder.load_string("""
                 use_separator: True
                 ActionPrevious:
                     app_icon: ''
-                    title: 'Nova consulta'
+                    title: 'Consulta'
                     with_previous: False
                 ActionOverflow:
                 ActionButton:
@@ -1293,6 +1294,9 @@ class TestApp(App):
 
     def build(self):
         #Clock.schedule_once(self.screen_switch_one, 3)
+        
+        
+        self.icon = (Path("./images/") / f'LOGO.png').__str__()
         self.screen_switch_two()
         return sm
 
