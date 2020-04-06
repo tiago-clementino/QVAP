@@ -10,6 +10,7 @@ from model.connect_json import Qvap
 from widgets.my_spinner import SpinnerWidget
 from widgets.my_spinner import SpinnerOptions
 from screens.login import Login
+from kivy.clock import Clock
 
 class New(Screen):
 
@@ -88,19 +89,29 @@ class New(Screen):
         return Qvap.get_atributes()
 
     def query(self,msg=None):
-        #print(self.atribute_list_fixed)
 
         if(msg is not None):
             msg.text = New.format_message('Aguarde...')
-        #results = Qvap.get_best_distinct_settings_2(self.atribute_list_fixed.index,self.atribute_list_fixed['valor'],self.atribute_list_unwished.index,self.atribute_list_unwished['valor'],None,msg)
         
-        results = Qvap.get_best_distinct_settings_2(Login.get_connection(),self.atribute_list_fixed,self.atribute_list_unwished,msg)
+        Clock.schedule_once(self.query_2, 0)
+
+        # results = Qvap.get_best_distinct_settings_2(Login.get_connection(),self.atribute_list_fixed,self.atribute_list_unwished,msg)
+
+        # New.set_current_results(results)
+
+        # self.manager.transition.direction = 'left'
+        # self.manager.current = 'results'
+
+    def query_2(self,*args):
+
+        results = Qvap.get_best_distinct_settings_2(Login.get_connection(),self.atribute_list_fixed,self.atribute_list_unwished,None)
 
         New.set_current_results(results)
         #print(results)
 
         self.manager.transition.direction = 'left'
         self.manager.current = 'results'
+
     
     def add_year(self, grid, classname, default_text):
         

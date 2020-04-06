@@ -74,7 +74,7 @@ from pathlib import Path
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.clock import Clock
+#from kivy.clock import Clock
 from kivy.uix.actionbar import ActionBar
 
 import sys, os
@@ -1264,7 +1264,7 @@ Builder.load_string("""
             size_hint_y: None
             pos: 0, 0
             markup: True
-            text: "[color=222222][b]fgffdgh[/b][/color]"
+            text: "[color=222222][b][/b][/color]"
             height: 20
             background_color: 1, 1, 1, 1
 """)

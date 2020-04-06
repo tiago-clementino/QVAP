@@ -3,6 +3,11 @@ from os import listdir
 
 class SqlUtils:
 
+    
+    @staticmethod
+    def format_message(msg):
+        return f'"[color=222222][b][/b]{msg}[/color]"'
+
     def just_logged(conn):
         if(conn and conn.connected()):
             #rows = conn.query("select name from sqlite_master where type = ?",('table',))#datetime(now)
@@ -60,7 +65,7 @@ class SqlUtils:
                     print('Este login está duplicado:',login)
                 elif(len(rows) == 0):
                     if(msg is not None):
-                        msg.text = f'Login ou senha inválidos para este usuário: {login}'
+                        msg.text = SqlUtils.format_message(f'Login ou senha inválidos para este usuário: {login}')     
                     else:
                         print('Login ou senha inválidos para este usuário:',login)
                     return False
@@ -71,11 +76,11 @@ class SqlUtils:
             else:
                 print(rows)
                 if(msg is not None):
-                    msg.text = 'Problemas com o banco de dados'
+                    msg.text = SqlUtils.format_message( 'Problemas com o banco de dados')  
                 return False
         
         if(msg is not None):
-            msg.text = 'Não conectado ao banco de dados'
+            msg.text = SqlUtils.format_message('Não conectado ao banco de dados')  
         else:
             print('Não conectado ao banco de dados')
         return False

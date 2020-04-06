@@ -22,6 +22,11 @@ class Login(Screen):
         Login.conn = Connection()
         Login.conn.create_connection()#Path("data/") / "database.db")
 
+    
+    @staticmethod
+    def format_message(msg):
+        return f'"[color=222222][b][/b]{msg}[/color]"'
+
     def check_login(self,login=None,password=None,msg=None):
         if login is not None and password is not None and login.text.strip() != '' and password.text.strip() != '':
             if SqlUtils.check_login(Login.get_connection(),login.text,password.text,msg):
@@ -31,7 +36,7 @@ class Login(Screen):
             # else:
             #     msg.text = 'Login inválido'
         else:
-            msg.text = 'Login inválido'
+            msg.text = Login.format_message( 'Login inválido') 
             #return 'Login inválido'
 
     @staticmethod

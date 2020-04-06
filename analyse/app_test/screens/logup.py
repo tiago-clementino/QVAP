@@ -17,6 +17,11 @@ class Logup(Screen):
                 self.manager.transition.direction = 'left'
                 self.manager.current = 'recents'
 
+    
+    @staticmethod
+    def format_message(msg):
+        return f'"[color=222222][b][/b]{msg}[/color]"'
+
     def check_password_format(self,password,confirm_password,msg=None):
         message = ''
         if password is not None and confirm_password is not None:
@@ -34,7 +39,7 @@ class Logup(Screen):
             message = 'Senha ou confirmação de senha não informada'
         if message != '':
             if(msg is not None):
-                msg.text = message
+                msg.text = Logup.format_message( message)
             else:
                 print(message)
         return False
@@ -53,7 +58,7 @@ class Logup(Screen):
             message = 'E-mail não informado'
         if message != '':
             if(msg is not None):
-                msg.text = message
+                msg.text = Logup.format_message( message)
             else:
                 print(message)
         return False
