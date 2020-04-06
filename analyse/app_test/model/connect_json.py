@@ -1,7 +1,9 @@
-from pandas import DataFrame
-from pandas import read_json
+# from pandas import DataFrame
+# from pandas import read_json
 from screens.profile import Profile
 from pathlib import Path
+from json import loads
+from zipfile import ZipFile
 
 class Qvap:
 
@@ -122,8 +124,10 @@ class Qvap:
         if(path is not None and path < len(Qvap.paths) and path >= 0 and Qvap.current_path != path):
             Qvap.current_path = path
             
-            #Qvap.current_model = read_json(Path("json/") / f'model_{Qvap.paths[path]}', compression='zip', orient='columns')
-            Qvap.current_packagings = read_json(Path("json/") / f'packagings_{Qvap.paths[path]}', compression='zip', orient='columns')
+            # #Qvap.current_model = read_json(Path("json/") / f'model_{Qvap.paths[path]}', compression='zip', orient='columns')
+            # Qvap.current_packagings = read_json(Path("json/") / f'packagings_{Qvap.paths[path]}', compression='zip', orient='columns')
+
+            Qvap.current_packagings = Qvap.my_json_load(Path("json/") / f'packagings_{Qvap.paths[path]}')
         elif(Qvap.current_path is None):
             print('Modelo desconhecido')
             return None
@@ -138,13 +142,16 @@ class Qvap:
         if(path is not None and path < len(Qvap.paths) and path >= 0 and Qvap.current_path != path):
             Qvap.current_path = path
             
-            Qvap.current_model = read_json(Path("json/") / f'model_{Qvap.paths[path]}', compression='zip', orient='columns')
-            Qvap.current_packagings = read_json(Path("json/") / f'packagings_{Qvap.paths[path]}', compression='zip', orient='columns')
+            # Qvap.current_model = read_json(Path("json/") / f'model_{Qvap.paths[path]}', compression='zip', orient='columns')
+            # Qvap.current_packagings = read_json(Path("json/") / f'packagings_{Qvap.paths[path]}', compression='zip', orient='columns')
+            Qvap.current_model = Qvap.my_json_load(Path("json/") / f'model_{Qvap.paths[path]}')
+            Qvap.current_packagings = Qvap.my_json_load(Path("json/") / f'packagings_{Qvap.paths[path]}')
         elif(Qvap.current_path is None):
             print('Modelo desconhecido')
             return None
         elif(Qvap.current_model is None):
-            Qvap.current_model = read_json(Path("json/") / f'model_{Qvap.paths[Qvap.current_path]}', compression='zip', orient='columns')
+            # Qvap.current_model = read_json(Path("json/") / f'model_{Qvap.paths[Qvap.current_path]}', compression='zip', orient='columns')
+            Qvap.current_model = Qvap.my_json_load(Path("json/") / f'model_{Qvap.paths[Qvap.current_path]}')
         return Qvap.current_packagings, Qvap.current_model
 
     @staticmethod
@@ -189,15 +196,47 @@ class Qvap:
             fixes: variações de atributos
         '''
         packagings = Qvap.create_model_2(model_path)
+        #print(packagings)
         right_packagings = packagings
         if(fixed_attributes is not None):
-            for i in range(len(fixed_attributes)):
-                right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(fixed_attributes[i])] == fixes[i]]
+            #for i in range(len(fixed_attributes)):
+            for i in fixed_attributes:
+                for j,v in packagings[Qvap.translate_atributes(i)].items():
+                    
+                    #if(v not in fixes[i]):
+                    if(v not in fixes):
+                        try:
+                            del right_packagings['score'][j]
+                        except KeyError:
+                            print(j)
+                            print(right_packagings['score'])
+                            print(f'Chave {j} inacessível entre as embalagens')
+                #right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(fixed_attributes[i])] == fixes[i]]
         if(variable_attributes is not None):
-            for j in range(len(variable_attributes)):
-                right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(variable_attributes[j])] != variances[j]]
+            #for j in range(len(variable_attributes)):
+            for j in variable_attributes:
+                for i,v in packagings[Qvap.translate_atributes(j)].items():
+                    #if(v not in variances[j]):
+                    if(v not in variances):
+                        try:
+                            del right_packagings['score'][i]
+                        except KeyError:
+                            print(f'Chave {i} inacessível entre as embalagens')
+                #right_packagings = right_packagings.loc[right_packagings[Qvap.translate_atributes(variable_attributes[j])] != variances[j]]
 
         return right_packagings
+
+    @staticmethod
+    def my_json_load(file_name):
+        d = None
+        data = None
+        with ZipFile(file_name, "r") as z:
+            for filename in z.namelist():
+                with z.open(filename) as f:
+                    data = f.read()
+                    d = loads(data)
+        return d
+
 
 
     @staticmethod
@@ -229,5 +268,14 @@ class Qvap:
         #                 packagings.loc[j+1] = temp
         
         # print(4)
-        return packagings.sort_values(by=['score'], ascending=False)[:10].reset_index()#10 deve ser flexível e constar em settigns (base de dados)
+        sorted_ = sorted(packagings['score'].items(), key = lambda kv: (kv[1],kv[0]), reverse=True)
+        sorted_2 = dict()
+        count = 0
+        for v in sorted_:
+            sorted_2[count] = v[0]
+            count = count + 1
+        packagings['score_sort'] = sorted_2
+        
+        #return packagings.sort_values(by=['score'], ascending=False)[:10].reset_index()#10 deve ser flexível e constar em settigns (base de dados)
+        return packagings
 

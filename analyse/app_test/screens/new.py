@@ -1,5 +1,6 @@
 
-from pandas import DataFrame
+# from pandas import DataFrame
+# from kivy.storage.jsonstorage import JsonStore
 from kivy.uix.screenmanager import Screen
 from kivy.uix.spinner import Spinner
 from kivy.uix.button import Button
@@ -25,10 +26,10 @@ class New(Screen):
     def __init__(self):
         
         super(New, self).__init__()   
-        self.atribute_list_fixed = DataFrame([],columns=['atributo','valor'])
-        self.atribute_list_fixed.set_index('atributo',inplace=True)
-        self.atribute_list_unwished = DataFrame([],columns=['atributo','valor'])
-        self.atribute_list_unwished.set_index('atributo',inplace=True)
+        self.atribute_list_fixed = dict() # DataFrame([],columns=['atributo','valor'])
+        #self.atribute_list_fixed.set_index('atributo',inplace=True)
+        self.atribute_list_unwished = dict() # DataFrame([],columns=['atributo','valor'])
+        #self.atribute_list_unwished.set_index('atributo',inplace=True)
     
     @staticmethod
     def set_current_results(results):
@@ -52,7 +53,8 @@ class New(Screen):
             current_atributes = []
             #current_variances = []
             for v in atributes:
-                if(v in self.atribute_list_fixed.index):
+                #if(v in self.atribute_list_fixed.index):
+                if(v in self.atribute_list_fixed.keys()):
                     current_atributes.append(v)
                     #current_variances.append(self.atribute_list_fixed.loc[v].values[0])
                     if(Qvap.is_condictional_atribute_picture(v)):
@@ -64,8 +66,9 @@ class New(Screen):
             for v in atributes:
                 #if(v in self.atribute_list_fixed.index):
                 if(v in current_atributes):
-                    if(v in self.atribute_list_fixed.index):
-                        image_name = f'{image_name}{Qvap.get_atribute_letter(self.atribute_list_fixed.loc[v].values[0])}'
+                    if(v in self.atribute_list_fixed.keys()):
+                        #image_name = f'{image_name}{Qvap.get_atribute_letter(self.atribute_list_fixed.loc[v].values[0])}'
+                        image_name = f'{image_name}{Qvap.get_atribute_letter(self.atribute_list_fixed[v])}'
                     else:
                         print(v)
                         image_name = f'{image_name}{Qvap.get_atribute_letter(Qvap.get_condictional_variance_picture(v))}'
@@ -89,7 +92,8 @@ class New(Screen):
 
         if(msg is not None):
             msg.text = New.format_message('Aguarde...')
-        results = Qvap.get_best_distinct_settings_2(self.atribute_list_fixed.index,self.atribute_list_fixed['valor'],self.atribute_list_unwished.index,self.atribute_list_unwished['valor'],None,msg)
+        #results = Qvap.get_best_distinct_settings_2(self.atribute_list_fixed.index,self.atribute_list_fixed['valor'],self.atribute_list_unwished.index,self.atribute_list_unwished['valor'],None,msg)
+        results = Qvap.get_best_distinct_settings_2(self.atribute_list_fixed.keys(),self.atribute_list_fixed.values(),self.atribute_list_unwished.keys(),self.atribute_list_unwished.values(),None,msg)
 
         New.set_current_results(results)
         #print(results)
@@ -112,15 +116,20 @@ class New(Screen):
         #print(my_text,self.atribute_list_fixed)
         if(default_text.find('Indesejáveis')>= 0):
             background = self.background_color_unwished
-            if my_text in self.atribute_list_unwished.index or my_text in self.atribute_list_fixed.index:
+            #if my_text in self.atribute_list_unwished.index or my_text in self.atribute_list_fixed.index:
+            if my_text in self.atribute_list_unwished.keys() or my_text in self.atribute_list_fixed.keys():
                 classname.text = default_text
                 return
-            self.atribute_list_unwished=self.atribute_list_unwished.append(DataFrame([''],index=[my_text],columns=self.atribute_list_unwished.columns))
+            #self.atribute_list_unwished=self.atribute_list_unwished.append(DataFrame([''],index=[my_text],columns=self.atribute_list_unwished.columns))
+            self.atribute_list_unwished[my_text] = ''
+            
         else:
-            if my_text in self.atribute_list_fixed.index:
+            if my_text in self.atribute_list_fixed.keys():
+            #if my_text in self.atribute_list_fixed.index:
                 classname.text = default_text
                 return
-            self.atribute_list_fixed=self.atribute_list_fixed.append(DataFrame([''],index=[my_text],columns=self.atribute_list_fixed.columns))
+            #self.atribute_list_fixed=self.atribute_list_fixed.append(DataFrame([''],index=[my_text],columns=self.atribute_list_fixed.columns))
+            self.atribute_list_fixed[my_text] = ''
             
 
         
@@ -160,6 +169,7 @@ class New(Screen):
             ######incluir na listagem a ser consuktada
             ######alterar a imagem de exibição
 
+            
 
             text = args[0]
             text = New.layout_out(text)
@@ -171,14 +181,16 @@ class New(Screen):
                 fixed = False
 
             #aux = None
-            for i,v in atribute_list.iterrows():
+            for i,v in atribute_list.items():
                 if(i == text):
                     #aux = v
                     if(fixed):
                         # se é fixo não precisa ter o indesejável
                         
-                        if(i in self.atribute_list_unwished.index):
-                            if(New.layout_out(args[2]) in self.atribute_list_unwished['valor']):
+                        #if(i in self.atribute_list_unwished.index):
+                        if(i in self.atribute_list_unwished.keys()):
+                            #if(New.layout_out(args[2]) in self.atribute_list_unwished['valor']):
+                            if(New.layout_out(args[2]) in self.atribute_list_unwished.values()):
                                 args[1].text =  f'{args[0]}'
                                 return
                                 # grid.remove_widget(L)
@@ -186,17 +198,27 @@ class New(Screen):
                                 # self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
 
                         
-                        self.atribute_list_fixed=self.atribute_list_fixed.drop([i],axis=0)#.remove(v)
+                        #self.atribute_list_fixed=self.atribute_list_fixed.drop([i],axis=0)#.remove(v)
+                        try:
+                            del self.atribute_list_fixed[i]
+                        except KeyError:
+                            print(f'Chave {i} inacessível')
                     else:
                         # se é indesejável não precisa ter o fixo (mas aqui tem que verificar o valor também)
                         #if(v['valor'] == New.layout_out(args[2])):
-                        if(i in self.atribute_list_fixed.index):
+                        #if(i in self.atribute_list_fixed.index):
+                        if(i in self.atribute_list_fixed.keys()):
                             
-                            if(New.layout_out(args[2]) in self.atribute_list_fixed['valor']):
+                            #if(New.layout_out(args[2]) in self.atribute_list_fixed['valor']):
+                            if(New.layout_out(args[2]) in self.atribute_list_fixed.values()):
                                 grid.remove_widget(L)
                                 grid.remove_widget(R)
-                                self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
-                                return
+                                #self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
+                                try:
+                                    del self.atribute_list_unwished[i]
+                                except KeyError:
+                                    print(f'Chave {i} inacessível')
+                                #return
                             else:
                                 args[1].text =  f'{args[0]}'
                                 return
@@ -205,10 +227,14 @@ class New(Screen):
                             # self.atribute_list_fixed=self.atribute_list_fixed.drop([i],axis=0)#remove(v)
 
                                 
-                        self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
+                        #self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
+                        try:
+                            del self.atribute_list_unwished[i]
+                        except KeyError:
+                            print(f'Chave {i} inacessível')
                     break
             
-
+            
             args[1].text =  f'{args[0]}{New.layout(": ")}{args[2]}'
 
             #diminui a fonte
@@ -216,12 +242,12 @@ class New(Screen):
 
             #if(aux is None):
             if(fixed):
-                self.atribute_list_fixed=self.atribute_list_fixed.append(DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_fixed.columns))
+                #self.atribute_list_fixed=self.atribute_list_fixed.append(DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_fixed.columns))
+                self.atribute_list_fixed[text] = New.layout_out(args[2])
             else:
                 
-                self.atribute_list_unwished=self.atribute_list_unwished.append(DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_unwished.columns))
-
-
+                #self.atribute_list_unwished=self.atribute_list_unwished.append(DataFrame([New.layout_out(args[2])],index=[text],columns=self.atribute_list_unwished.columns))
+                self.atribute_list_unwished[text] = New.layout_out(args[2])
 
             if(self.changing_image is not None):
                 self.change_image()
@@ -258,12 +284,22 @@ class New(Screen):
 
         grid.remove_widget(L)
         grid.remove_widget(R)
-        for i,v in atribute_list.iterrows():
+        for i,v in atribute_list.items():
             if(i == texts[0]):
                 if(fixed):
-                    self.atribute_list_fixed=self.atribute_list_fixed.drop([i],axis=0)#.remove(v)
+                    #self.atribute_list_fixed=self.atribute_list_fixed.drop([i],axis=0)#.remove(v)
+                    try:
+                        del self.atribute_list_fixed[i]
+                    except KeyError:
+                        print(f'Chave {i} inacessível')
+                    return
                 else:
-                    self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
+                    #self.atribute_list_unwished=self.atribute_list_unwished.drop([i],axis=0)#remove(v)
+                    try:
+                        del self.atribute_list_unwished[i]
+                    except KeyError:
+                        print(f'Chave {i} inacessível')
+                    return
                 break
 
 

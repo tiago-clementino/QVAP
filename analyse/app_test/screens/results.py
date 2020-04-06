@@ -31,7 +31,8 @@ class Results(Screen):
         scroll_grid.clear_widgets()
 
         first = True
-        for i,v in results.iterrows():
+        #for i,v in results.iterrows():
+        for i in range(len(results['score_sort'])):
 
             my_text = f'{i+1}º'
 
@@ -46,15 +47,17 @@ class Results(Screen):
             #right.halign = 'center'
             #right.valign = 'middle'
 
-            right.bind(on_press=partial(self.mark_me, grid, scroll_grid, i, v, right, changing_image))
+            #right.bind(on_press=partial(self.mark_me, grid, scroll_grid, i, v, right, changing_image))
+            right.bind(on_press=partial(self.mark_me, grid, scroll_grid, i, right, changing_image))
 
-            icon = Image(source =Qvap.get_image_name([v['material'],v['shape'],v['color'],v['surface'],v['constitution']]),size_hint_x=0.3, size=(60,60))
+            icon = Image(source =Qvap.get_image_name([results['material'][results['score_sort'][i]],results['shape'][results['score_sort'][i]],results['color'][results['score_sort'][i]],results['surface'][results['score_sort'][i]],results['constitution'][results['score_sort'][i]]]),size_hint_x=0.3, size=(60,60))
             #right.add_widget(icon)
 
             if(first):
                 first = False
                 right.disabled = True
-                Results.select(changing_image,grid,i,v)
+                #Results.select(changing_image,grid,i,v)
+                Results.select(changing_image,grid,i)
 
                 
                     
@@ -108,24 +111,32 @@ class Results(Screen):
         #return [color_red,color_green,color_blue,1.0]
 
     @staticmethod
-    def select(changing_image,grid,i,v):
-        changing_image.source = Qvap.get_image_name([v['material'],v['shape'],v['color'],v['surface'],v['constitution']])
+    def select(changing_image,grid,i):
+        results = New.get_current_results()
+        #changing_image.source = Qvap.get_image_name([v['material'],v['shape'],v['color'],v['surface'],v['constitution']])
+        changing_image.source = Qvap.get_image_name([results['material'][results['score_sort'][i]],results['shape'][results['score_sort'][i]],results['color'][results['score_sort'][i]],results['surface'][results['score_sort'][i]],results['constitution'][results['score_sort'][i]]])
         #print(v)
         atributes_en = Qvap.get_atributes_en()
 
         sum_most = 0
         sum_less = 0
         
-        for c in v.index:
-            #print(v[c])
+        #for c in v.index:
+        for c in results.keys():
+            
             if(c.find('_weight') >= 0):
-                if(v[c] > 0):
-                    if(sum_most < v[c]):
-                        sum_most = v[c]
+                #if(v[c] > 0):
+                if(results[c][results['score_sort'][i]] > 0):
+                    #if(sum_most < v[c]):
+                    if(sum_most < results[c][results['score_sort'][i]]):
+                        #sum_most = v[c]
+                        sum_most = results[c][results['score_sort'][i]]
                 else:
-                    if(sum_less > v[c]):
-                        sum_less = v[c]
-        #print(sum_most,sum_less)
+                    #if(sum_less > v[c]):
+                    if(sum_less > results[c][results['score_sort'][i]]):
+                        #sum_less = v[c]
+                        sum_less = results[c][results['score_sort'][i]]
+                        
         if(sum_less < 0):
             sum_less = -1 * sum_less
 
@@ -142,9 +153,11 @@ class Results(Screen):
                 #score = (', QVP = {:{width}.{prec}f}%'.format(v["score"]*100, width=3, prec=2)).replace('.',',')
                 xx.text = Results.layout(f'[b]{i+1}º[/b]')
             elif(xx.name == 'score'):
-                xx.text = Results.layout(('{:{width}.{prec}f}%'.format(v["score"]*100, width=3, prec=2)).replace('.',','))
+                #xx.text = Results.layout(('{:{width}.{prec}f}%'.format(v["score"]*100, width=3, prec=2)).replace('.',','))
+                xx.text = Results.layout(('{:{width}.{prec}f}%'.format(results["score"][results['score_sort'][i]]*100, width=3, prec=2)).replace('.',','))
             elif(xx.name in atributes_en):
-                xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {v[xx.name]}:')
+                #xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {v[xx.name]}:')
+                xx.text = Results.layout(f'{Qvap.translate_atributes_en(xx.name)} = {results[xx.name][results["score_sort"][i]]}:')
             elif(xx.name.replace('_weight','') in atributes_en):
                 #with x.canvas:
                 #Color(rgba=self.pencolor)
@@ -152,11 +165,12 @@ class Results(Screen):
                 #print(Color)
                 #x.background_color = Results.get_weight_color(v[x.name],sum_most,sum_less)
                 
-                xx.background_color = Results.get_weight_color(v[xx.name],sum_most,sum_less)
+                #xx.background_color = Results.get_weight_color(v[xx.name],sum_most,sum_less)
+                xx.background_color = Results.get_weight_color(results[xx.name][results['score_sort'][i]],sum_most,sum_less)
                 #print(x.background_color)
                 #x.text = Results.layout('{:{width}.{prec}f}%'.format(v[x.name]*100, width=3, prec=2))
 
-    def mark_me(self, grid, scroll_grid, i, xx, me, changing_image, *args):
+    def mark_me(self, grid, scroll_grid, i, me, changing_image, *args):
         #print(grid.children, me)
 
         for v in scroll_grid.children:
@@ -165,7 +179,7 @@ class Results(Screen):
             else:
                 v.disabled = True
 
-        Results.select(changing_image,grid,i,xx)
+        Results.select(changing_image,grid,i)
     
     def logoff(self,msg=None):
         if Login.logoff(msg):

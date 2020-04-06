@@ -815,7 +815,7 @@ Builder.load_string("""
                 Image:
                     id: changing_image_2
                     size: 17, 17
-                    source: 'images/png/XG.png'
+                    source: 'images/png/XG.gif'
                 GridLayout:
                     cols: 2
                     id: home_grid
