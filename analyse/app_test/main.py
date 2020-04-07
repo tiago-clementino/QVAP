@@ -448,7 +448,7 @@ Builder.load_string("""
                         row_force_default: True 
                         size_hint_y: None
                         row_default_height: self.height * 0.3
-                        height: 1000
+                        height: 1200
                         padding: 20
                         
                         #size_hint_y: 0.2#(root.height - (root.height - bar_.height * 6.6))*0.0001
