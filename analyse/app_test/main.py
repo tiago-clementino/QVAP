@@ -498,7 +498,7 @@ Builder.load_string("""
                         Label:  
                             markup: True
                             
-                            text: "[color=222222]Recomendações: O aplicativo pode te auxiliar indicando quais configurações mais eficientes em comunicar sustentabilidade. Para isto, é preciso definir como fixo aqueles recursos que não podem ser alterados no seu projeto, a exemplo de um material específico e indispenssável, e indicar quais características indesejadas, aquelas que não poderiam ser adotadas. A partir destas definições, você deve clicar em consultar e o aplicativo te fornecerá as melhores opções diante das limitações estabelecidas, ordenadas daquela que melhor comunica sustentabilidade à pior.[/color]"   
+                            text: "[color=222222]Recomendações: O aplicativo pode te auxiliar indicando quais configurações mais eficientes em comunicar sustentabilidade. Para isto, é preciso definir como fixo aqueles recursos que não podem ser alterados no seu projeto, a exemplo de um material específico e indispensável, e indicar quais características indesejadas, aquelas que não poderiam ser adotadas. A partir destas definições, você deve clicar em consultar e o aplicativo te fornecerá as melhores opções diante das limitações estabelecidas, ordenadas daquela que melhor comunica sustentabilidade à pior.[/color]"   
                             multiline: False
                             text_size: self.size
                             halign: 'justify'
