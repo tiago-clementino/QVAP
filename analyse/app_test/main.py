@@ -448,7 +448,7 @@ Builder.load_string("""
                         row_force_default: True 
                         size_hint_y: None
                         row_default_height: self.height * 0.3
-                        height: 800
+                        height: 1000
                         padding: 20
                         
                         #size_hint_y: 0.2#(root.height - (root.height - bar_.height * 6.6))*0.0001
@@ -469,7 +469,7 @@ Builder.load_string("""
                         Label:  
                             markup: True
                             
-                            text: "[color=222222]Avaliar a configuração atual da embalagem. Para isto, é preciso clicar em nova consulta e definir todos os atributos como fixos. Clique em [b]fixo[/b] selecionando material, forma, cor, superfície e constituição gráfica. Em seguida, clique em cada uma para definir o tipo. Finalize clicando em consultar. O aplicativo te fornecerá a porcentagem de percepção sobre a sustentabilidade da configuração, indicando em verde os atributos que contribuem positivamente, e vermelho para aqueles que não foram associados a sustentabilidade do produto.[/color]"   
+                            text: "[color=222222]Avaliar a configuração atual da embalagem: para isto, é preciso clicar em nova consulta e definir todos os atributos como fixos. Clique em [b]fixo[/b] selecionando material, forma, cor, superfície e constituição gráfica. Em seguida, clique em cada uma para definir o tipo. Finalize clicando em consultar. O aplicativo te fornecerá a porcentagem de percepção sobre a sustentabilidade da configuração a partir das respostas dadas pelo público de interesse, indicando em verde os atributos que contribuem positivamente e vermelho aqueles que contribuem negativamente.[/color]"   
                             multiline: True
                             text_size: self.size
                             halign: 'justify'
@@ -498,7 +498,7 @@ Builder.load_string("""
                         Label:  
                             markup: True
                             
-                            text: "[color=222222]Recomendações: O aplicativo pode te auxiliar indicando quais configurações mais eficientes em comunicar sustentabilidade por meio de um projeto de embalagem. Para isto, é preciso definir como fixo aqueles recursos que não podem ser alterados no seu projeto, a exemplo de um material específico e indispenssável, e indicar quais características indesejadas, aquelas que não poderiam ser adotadas. A partir destas definições, você deve clicar em consultar e o aplicativo te fornecerá as melhores opções diante das limitações estabelecidas, ordenadas daquela que melhor comunica sustentabilidade à pior.[/color]"   
+                            text: "[color=222222]Recomendações: O aplicativo pode te auxiliar indicando quais configurações mais eficientes em comunicar sustentabilidade. Para isto, é preciso definir como fixo aqueles recursos que não podem ser alterados no seu projeto, a exemplo de um material específico e indispenssável, e indicar quais características indesejadas, aquelas que não poderiam ser adotadas. A partir destas definições, você deve clicar em consultar e o aplicativo te fornecerá as melhores opções diante das limitações estabelecidas, ordenadas daquela que melhor comunica sustentabilidade à pior.[/color]"   
                             multiline: False
                             text_size: self.size
                             halign: 'justify'
