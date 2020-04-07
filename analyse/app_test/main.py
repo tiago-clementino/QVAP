@@ -461,7 +461,7 @@ Builder.load_string("""
                             halign: 'center'
                             valign: 'top'
 
-                            font_size: self.parent.width * 0.025 + 6
+                            font_size: self.parent.width * 0.025 + 5
 
 
                             size_hint_y: 0.5
@@ -475,7 +475,7 @@ Builder.load_string("""
                             halign: 'justify'
                             valign: 'top'
 
-                            font_size: self.parent.width * 0.025 + 6
+                            font_size: self.parent.width * 0.025 + 5
 
                             size_hint_y: 0.5
                         
@@ -490,7 +490,7 @@ Builder.load_string("""
                             halign: 'center'
                             valign: 'top'
 
-                            font_size: self.parent.width * 0.025 + 6
+                            font_size: self.parent.width * 0.025 + 5
 
                             size_hint_y: 0.5
                         
@@ -504,7 +504,7 @@ Builder.load_string("""
                             halign: 'justify'
                             valign: 'top'
 
-                            font_size: self.parent.width * 0.025 + 6
+                            font_size: self.parent.width * 0.025 + 5
 
                             size_hint_y: 0.5
 
