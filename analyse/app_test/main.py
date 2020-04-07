@@ -350,14 +350,6 @@ Builder.load_string("""
                 # self here refers to the widget i.e FloatLayout
                 pos: self.pos
                 size: self.size
-
-        
-        Image:
-        
-            size: self.parent.width, 200
-            size_hint_y: None
-            pos: 0, self.parent.height - bar_.height * 4.8
-            source: 'images/aplicativo_info.png'
         ActionBar:
             id: bar_
             pos_hint: {'top':1}
@@ -400,7 +392,7 @@ Builder.load_string("""
             cols: 1
             orientation: 'vertical'
             size_hint_y: None
-            pos: 0, self.parent.height - bar_.height * 6.6
+            pos: 0, self.parent.height - bar_.height * 3.2
             # pos: 0, self.parent.height - 315
             row_force_default: True 
             row_default_height: self.parent.height
@@ -425,6 +417,14 @@ Builder.load_string("""
                     #row_default_height: 45
                     #row_force_default: True 
                     height: self.minimum_height
+
+        
+                    Image:
+                    
+                        size: self.parent.width, root.height - bar_.height * 6.6
+                        size_hint_y: None
+                        #pos: 0, self.parent.height - bar_.height * 4.8
+                        source: 'images/aplicativo_info.png'
                     
 
                     #center: root.width / 2, root.height / 2
