@@ -354,9 +354,9 @@ Builder.load_string("""
         
         Image:
         
-            size: 200, 200
+            size: self.parent.width, 200
             size_hint_y: None
-            pos: 0, self.parent.height - bar_.height * 4.8 # * 0.37
+            pos: 0, self.parent.height - bar_.height * 4.8
             source: 'images/aplicativo_info.png'
         ActionBar:
             id: bar_
