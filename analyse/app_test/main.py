@@ -390,6 +390,126 @@ Builder.load_string("""
                         text: 'Sair'
                         on_press: 
                             exit()
+
+
+        GridLayout:
+            cols: 1
+            orientation: 'vertical'
+            size_hint_y: None
+            pos: 0, self.parent.height - bar_.height * 6.6
+            # pos: 0, self.parent.height - 315
+            row_force_default: True 
+            row_default_height: self.parent.height
+
+        
+            ScrollView:
+
+
+                size_hint:(1, .8)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                #pos: 0, self.parent.height
+
+                do_scroll_x: False
+                #height: self.parent.height
+
+                GridLayout:
+                    cols: 1
+                    orientation: 'vertical'
+                    size_hint: (1, None)
+                    #pos: 0, self.parent.height
+                    #row_default_height: 45
+                    #row_force_default: True 
+                    height: self.minimum_height
+                    
+
+                    #center: root.width / 2, root.height / 2
+
+                    BackgroundLabel:  
+                        markup: True
+                        
+                        text: "[color=222222][b]Por meio do aplicativo é possível realizar as seguintes ações:[/b][/color]"   
+                        text_size: (self.width-10, self.height)
+                        multiline: False
+                        halign: 'left'
+                        valign: 'middle'
+                        height: self.parent.height * 0.005 + 45
+                        background_color: 0.5, 0.5, 0.5, 1
+                
+                        font_size: self.parent.width * 0.025 + 6
+
+                        size_hint_y: None
+
+                    GridLayout:
+                        cols: 2
+                        id: main_grid
+                        name: 'main_grid'
+                        orientation: 'vertical'
+                        row_force_default: True 
+                        size_hint_y: None
+                        row_default_height: self.height * 0.3
+                        height: 800
+                        padding: 20
+                        
+                        #size_hint_y: 0.2#(root.height - (root.height - bar_.height * 6.6))*0.0001
+                        
+                        Label:  
+                            markup: True
+                            size_hint_x: 0.1
+                            text: "[color=222222][b]1.[/b][/color]"   
+                            text_size: self.size
+                            halign: 'center'
+                            valign: 'top'
+
+                            font_size: self.parent.width * 0.025 + 6
+
+
+                            size_hint_y: 0.5
+                        
+                        Label:  
+                            markup: True
+                            
+                            text: "[color=222222]Avaliar a configuração atual da embalagem. Para isto, é preciso clicar em nova consulta e definir todos os atributos como fixos. Clique em [b]fixo[/b] selecionando material, forma, cor, superfície e constituição gráfica. Em seguida, clique em cada uma para definir o tipo. Finalize clicando em consultar. O aplicativo te fornecerá a porcentagem de percepção sobre a sustentabilidade da configuração, indicando em verde os atributos que contribuem positivamente, e vermelho para aqueles que não foram associados a sustentabilidade do produto.[/color]"   
+                            multiline: True
+                            text_size: self.size
+                            halign: 'justify'
+                            valign: 'top'
+
+                            font_size: self.parent.width * 0.025 + 6
+
+                            size_hint_y: 0.5
+                        
+                        
+                        
+                        
+                        Label:  
+                            markup: True
+                            size_hint_x: 0.1
+                            text: "[color=222222][b]2.[/b][/color]"   
+                            text_size: self.size
+                            halign: 'center'
+                            valign: 'top'
+
+                            font_size: self.parent.width * 0.025 + 6
+
+                            size_hint_y: 0.5
+                        
+                        
+                        Label:  
+                            markup: True
+                            
+                            text: "[color=222222]Recomendações: O aplicativo pode te auxiliar indicando quais configurações mais eficientes em comunicar sustentabilidade por meio de um projeto de embalagem. Para isto, é preciso definir como fixo aqueles recursos que não podem ser alterados no seu projeto, a exemplo de um material específico e indispenssável, e indicar quais características indesejadas, aquelas que não poderiam ser adotadas. A partir destas definições, você deve clicar em consultar e o aplicativo te fornecerá as melhores opções diante das limitações estabelecidas, ordenadas daquela que melhor comunica sustentabilidade à pior.[/color]"   
+                            multiline: False
+                            text_size: self.size
+                            halign: 'justify'
+                            valign: 'top'
+
+                            font_size: self.parent.width * 0.025 + 6
+
+                            size_hint_y: 0.5
+
+
+
         BackgroundLabel:
             id: msg
             size_hint_y: None
@@ -1231,7 +1351,7 @@ Builder.load_string("""
                         Label:  
                             markup: True
                             
-                            text: "[color=222222][b]Confirmar enha[/b][/color]"   
+                            text: "[color=222222][b]Confirmar senha[/b][/color]"   
 
                             text_size: self.size
                             halign: 'right'
