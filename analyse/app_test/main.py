@@ -344,16 +344,20 @@ Builder.load_string("""
         orientation: 'vertical'
         canvas.before:
             Color:
-                rgb: utils.get_color_from_hex('#bdbfc1')
+                #rgb: utils.get_color_from_hex('#bdbfc1')
+                rgb: utils.get_color_from_hex('#ffffff')
             Rectangle:
                 # self here refers to the widget i.e FloatLayout
                 pos: self.pos
                 size: self.size
+
+        
         Image:
+        
             size: 200, 200
             size_hint_y: None
             pos: 0, self.parent.height - bar_.height * 4.8 # * 0.37
-            source: 'images/splash.gif'
+            source: 'images/aplicativo_info.png'
         ActionBar:
             id: bar_
             pos_hint: {'top':1}
